@@ -50,9 +50,9 @@ export const TeacherHighlight: React.FC = () => {
           </div>
 
           <div className="lg:w-1/2">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 items-stretch">
               {teachers.map((teacher, idx) => (
-                <div key={idx} className={`bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary-500 transition-all duration-300 ${idx % 2 !== 0 ? 'mt-8' : ''}`}>
+                <div key={idx} className="bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-primary-500 transition-all duration-300 h-full flex flex-col justify-between">
                   <div className="flex items-center gap-4 mb-3">
                     <img src={teacher.img} alt={teacher.name} className="w-12 h-12 rounded-full object-cover border-2 border-slate-600" />
                     <div>

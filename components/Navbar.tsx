@@ -26,14 +26,18 @@ export const Navbar: React.FC = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-            <div className="bg-primary-600 p-2 rounded-lg text-white">
-              <BookOpen size={24} strokeWidth={3} />
+          {/* Logo (image + text beside it to match provided artwork) */}
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+            {/* Place your logo image at the project root or public folder as /LOGO.png */}
+            <img src="/LOGO.png" alt="İşlemTamam Logo" className="w-12 h-12 object-contain" />
+            <div className="flex flex-col leading-tight">
+              <span className="text-lg font-bold tracking-tight uppercase text-slate-900">
+                İŞLEM TAMAM
+              </span>
+              <span className="text-slate-600 text-xs">
+                ONLINE DERS SİSTEMİ | LGS
+              </span>
             </div>
-            <span className={`text-2xl font-bold tracking-tight ${isScrolled ? 'text-slate-900' : 'text-slate-800'}`}>
-              İşlem<span className="text-primary-600">Tamam</span>
-            </span>
           </div>
 
           {/* Desktop Nav */}

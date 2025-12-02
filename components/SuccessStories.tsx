@@ -4,24 +4,24 @@ import { Trophy } from 'lucide-react';
 const stories = [
   {
     name: "Berkay Yıldız",
-    uni: "Boğaziçi Üniversitesi",
-    dept: "Bilgisayar Mühendisliği",
-    rank: "TR 150.",
-    quote: "Matematik netlerim İşlemTamam sayesinde 20'den 38'e çıktı."
+    uni: "Kadıköy Anadolu Lisesi",
+    dept: "LGS 2024 - 890 Puan",
+    rank: "TR 250.",
+    quote: "Matematik net sayısını 8'den 42'ye çıkardım. İşlemTamam sayesinde LGS'de en iyi sonucumu aldım."
   },
   {
     name: "Zeynep Kara",
-    uni: "Hacettepe Üniversitesi",
-    dept: "Tıp Fakültesi",
-    rank: "TR 950.",
-    quote: "Disiplinli takip sistemi olmasa bu sıralamayı yapamazdım."
+    uni: "Fenerbahçe Üniversite Lisesi",
+    dept: "LGS 2024 - 920 Puan",
+    rank: "TR 80.",
+    quote: "Disiplinli LGS programı ve haftalık takip sistemi hayat kurtarıcı oldu."
   },
   {
     name: "Canan Erkin",
-    uni: "ODTÜ",
-    dept: "Mimarlık",
-    rank: "TR 2400.",
-    quote: "Hocalarımızın ilgisi, özel ders alıyormuşum gibi hissettirdi."
+    uni: "Bahçeşehir Koleji",
+    dept: "LGS 2024 - 875 Puan",
+    rank: "TR 340.",
+    quote: "Öğretmenlerin canlı LGS derslerinde anında soru sorabilmek çok etkili oldu."
   }
 ];
 
@@ -30,8 +30,8 @@ export const SuccessStories: React.FC = () => {
     <section id="basarilar" className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Gurur Tablomuz</h2>
-          <p className="mt-4 text-lg text-slate-600">Onlar hayallerine kavuştu, şimdi sıra sende.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">LGS Başarı Öyküleri</h2>
+          <p className="mt-4 text-lg text-slate-600">Onlar hedeflerine ulaştı, şimdi sıra sende.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

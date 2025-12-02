@@ -5,25 +5,25 @@ const reviews = [
   {
     id: 1,
     name: "Selin Yılmaz",
-    role: "12. Sınıf Öğrencisi",
+    role: "8. Sınıf Öğrencisi",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-    content: "Matematik netlerim 5-6 civarındaydı, İşlemTamam ile tanıştıktan sonra 25 üstüne sabitledim. Hocaların ilgisi gerçekten çok farklı.",
+    content: "Matematik netlerim 5-6 civarındaydı, İşlemTamam LGS kursları sayesinde 38'e çıktım. Canlı derslerde hocalarımız çok yardımcı oluyor.",
     rating: 5
   },
   {
     id: 2,
     name: "Mehmet Öztürk",
-    role: "Öğrenci Velisi",
+    role: "LGS Öğrencisi Velisi",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-    content: "Kızım için endişeliydim ama koçluk sistemi sayesinde hem stresi azaldı hem de çalışma disiplini kazandı. Tüm öğretmenlere teşekkürler.",
+    content: "Oğlum için LGS hazırlığında endişeliydim ama bu kursu sayesinde hem özgüveni arttı hem de dersleri iyi anladı.",
     rating: 5
   },
   {
     id: 3,
     name: "Ayşe Demir",
-    role: "Mezun Öğrenci (Tıp Kazandı)",
+    role: "LGS 2024 - 920 Puan",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
-    content: "Soru çözüm grupları hayat kurtarıcı. Gece 11'de attığım soruya bile 10 dakika içinde görüntülü çözüm geliyordu. Harika bir sistem.",
+    content: "Soru çözüm grupları çok etkili. Gece 11'de attığım soruya bile hocalarımız 10 dakika içinde video çözüm gönderiyor.",
     rating: 5
   }
 ];
@@ -34,7 +34,7 @@ export const Testimonials: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Sizden Gelenler</h2>
-          <h2 className="mt-2 text-3xl font-bold text-slate-900">Öğrencilerimiz ve Velilerimiz Ne Diyor?</h2>
+          <h2 className="mt-2 text-3xl font-bold text-slate-900">LGS Öğrencileri ve Velilerimiz Ne Diyor?</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

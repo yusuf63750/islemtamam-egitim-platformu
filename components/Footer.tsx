@@ -18,8 +18,8 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              10 kişilik dev kadro ile sınavlara hazırlıkta yeni bir dönem. 
-              Başarıyı şansa bırakmayın, işi uzmanına bırakın.
+              LGS'ye hazırlık için 10 kişilik öğretmen kadromuzla başarıya ulaşın. 
+              Başarıyı şansa bırakmayın, işi LGS uzmanlarına bırakın.
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-slate-400 hover:text-white transition-colors"><Instagram size={20} /></a>
@@ -32,10 +32,9 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">Hızlı Erişim</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Paketler</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Öğretmen Kadrosu</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Başarı Hikayeleri</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Örnek Dersler</a></li>
+              <li><a href="#paketler" className="hover:text-primary-400 transition-colors">Paketler</a></li>
+              <li><a href="#kadro" className="hover:text-primary-400 transition-colors">Öğretmen Kadrosu</a></li>
+              <li><a href="#basarilar" className="hover:text-primary-400 transition-colors">Başarı Hikayeleri</a></li>
             </ul>
           </div>
 
@@ -43,10 +42,8 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">Kaynaklar</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Rehberlik Yazıları</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Çıkmış Sorular</a></li>
-              <li><a href="#" className="hover:text-primary-400 transition-colors">Sıkça Sorulan Sorular</a></li>
+              <li><a href="#yorumlar" className="hover:text-primary-400 transition-colors">Öğrenci Yorumları</a></li>
+              <li><a href="#sss" className="hover:text-primary-400 transition-colors">Sıkça Sorulan Sorular</a></li>
             </ul>
           </div>
 
@@ -71,7 +68,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
-          <p>&copy; 2024 İşlemTamam Eğitim Danışmanlık. Tüm hakları saklıdır.</p>
+          <p>&copy; 2024 LGS Hazırlık Platformu - İşlemTamam. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>

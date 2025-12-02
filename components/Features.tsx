@@ -5,38 +5,38 @@ const features = [
   {
     icon: <Users className="w-6 h-6 text-white" />,
     color: "bg-blue-500",
-    title: "10 Kişilik Dev Kadro",
-    description: "Her ders için alanında uzman, sınav sistemine hakim öğretmenlerden oluşan güçlü bir ekip."
+    title: "10 Kişilik LGS Uzman Kadro",
+    description: "Her ders için LGS müfredatına hakim, sorulara cevap verebilen uzman öğretmenlerden oluşan ekip."
   },
   {
     icon: <Video className="w-6 h-6 text-white" />,
     color: "bg-orange-500",
-    title: "Canlı Dersler & Kayıtlar",
-    description: "İster canlı katıl, sorunu sor; istersen kaçırdığın dersleri sınırsız tekrar et."
+    title: "Canlı LGS Dersleri & Kayıtlar",
+    description: "İster canlı katıl, LGS konularını anla; istersen kaçırdığın dersleri sınırsız tekrar et."
   },
   {
     icon: <BookOpen className="w-6 h-6 text-white" />,
     color: "bg-green-500",
-    title: "Dijital Kütüphane",
-    description: "PDF notlar, deneme sınavları ve soru bankalarına 7/24 erişim imkanı."
+    title: "LGS Soru Bankası ve Deneme",
+    description: "Binlerce çıkmış LGS sorusu, çözümlü deneme sınavları ve konu kütüphanesine 7/24 erişim."
   },
   {
     icon: <Target className="w-6 h-6 text-white" />,
     color: "bg-purple-500",
-    title: "Kişiye Özel Koçluk",
-    description: "Sadece ders değil, motivasyon ve planlama desteği ile her an yanındayız."
+    title: "Kişiye Özel LGS Koçluğu",
+    description: "Zayıf branşlarında birebir destek, hedef puan belirleme ve motivasyon rehberliği."
   },
   {
     icon: <MessageCircle className="w-6 h-6 text-white" />,
     color: "bg-pink-500",
-    title: "Soru Çözüm Grupları",
-    description: "Yapamadığın soruları gönder, öğretmenlerimiz ve arkadaşlarınla anında çözüme kavuştur."
+    title: "LGS Soru Çözüm Sistemleri",
+    description: "Yapamadığın LGS sorularını gönder, öğretmenlerimiz video ile anında çözüme kavuştur."
   },
   {
     icon: <Clock className="w-6 h-6 text-white" />,
     color: "bg-indigo-500",
-    title: "Hızlandırılmış Kamplar",
-    description: "Sınav öncesi son tekrarlar ve yoğunlaştırılmış programlarla eksiklerini kapat."
+    title: "Sınav Öncesi Yoğunlaşma",
+    description: "LGS'ye 4-6 hafta kala son düşüş, eksiklikleri kapatma ve full tekrar kampları."
   }
 ];
 
@@ -45,12 +45,12 @@ export const Features: React.FC = () => {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Neden İşlemTamam?</h2>
+          <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Neden İşlemTamam LGS?</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Başarıya Giden Yolda Tam Donanımlı Destek
+            LGS Başarısına Giden Yolda Tam Donanımlı Destek
           </p>
           <p className="mt-4 max-w-2xl text-xl text-slate-500 mx-auto">
-            Klasik dershanelerin ötesinde, modern ve sonuç odaklı bir eğitim sistemi sunuyoruz.
+            LGS'ye özel hazırlanmış, modern ve sonuç odaklı bir eğitim sistemi sunuyoruz.
           </p>
         </div>
 

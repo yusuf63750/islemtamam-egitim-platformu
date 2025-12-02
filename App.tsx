@@ -24,28 +24,26 @@ function App() {
         <SuccessStories />
         <Testimonials />
         
-        {/* CTA Section */}
+          {/* CTA Section */}
         <section className="py-20 bg-primary-600 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
           <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Başarı Hikayeni Yazmaya Hazır mısın?
+              LGS Başarı Yolculuğuna Hemen Başla!
             </h2>
             <p className="text-primary-100 text-lg mb-10 max-w-2xl mx-auto">
-              Kontenjanlarımız sınırlıdır. 10 kişilik uzman kadromuzla tanışmak ve deneme dersine katılmak için hemen başvurun.
+              Kontenjanlarımız sınırlıdır. 10 kişilik LGS uzman kadromuzla tanışmak ve deneme dersine katılmak için hemen başvurun.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="white" size="lg" className="text-primary-700 font-bold">
-                Hemen Kayıt Ol
+                LGS'ye Başvur
               </Button>
               <Button variant="secondary" size="lg" className="gap-2">
-                Whatsapp'tan Bilgi Al <ArrowRight size={18} />
+                WhatsApp'tan LGS Bilgi Al <ArrowRight size={18} />
               </Button>
             </div>
           </div>
-        </section>
-
-        <FAQ />
+        </section>        <FAQ />
       </main>
 
       <Footer />

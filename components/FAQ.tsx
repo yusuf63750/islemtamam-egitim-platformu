@@ -3,24 +3,28 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const faqs = [
   {
-    q: "Eğitim paketine yılın ortasında katılabilir miyim?",
-    a: "Evet! Kayıt olduğunuz andan itibaren geçmiş tüm ders kayıtlarına ve dokümanlara erişiminiz açılır. Ayrıca size özel bir telafi programı hazırlanır."
+    q: "LGS kursuna kaç sınıf öğrencisi katılabilir?",
+    a: "Genellikle 8. sınıf öğrencileri katılır. Ancak 9. sınıfların LGS yılındaki ilk dönemi de içerir. En erken 7. sınıf ortasında başlayanlar da olmuştur."
   },
   {
-    q: "Öğretmenlere birebir soru sorabiliyor muyuz?",
-    a: "Kesinlikle. Haftalık soru çözüm saatlerimizde canlı olarak, diğer zamanlarda ise soru çözüm uygulamamız üzerinden fotoğraf göndererek 7/24 soru sorabilirsiniz."
+    q: "LGS kursunu yılın ortasında başlayabilir miyim?",
+    a: "Evet! Kayıt olduğunuz andan itibaren önceki tüm ders videoları, çıkmış sorular ve çözümlere erişiminiz açılır. Ayrıca kişiye özel telafi programı hazırlarız."
   },
   {
-    q: "Deneme sınavları online mı yapılıyor?",
-    a: "Hem online hem de evinize kargoladığımız basılı deneme setleriyle sınavlar yapıyoruz. Türkiye geneli sıralamanızı görebiliyorsunuz."
+    q: "Öğretmenlere LGS konularında birebir soru sorabiliyor muyuz?",
+    a: "Kesinlikle. Haftalık canlı soru çözüm saatlerimizde anında soru sorabilir, diğer zamanlarda ise WhatsApp veya soru çözüm platformumuz üzerinden 7/24 destek alabilirsiniz."
   },
   {
-    q: "Fiyatlandırma ve ödeme seçenekleri nelerdir?",
-    a: "Farklı paket seçeneklerimiz mevcuttur. Kredi kartına 12 taksit imkanı ve peşin ödemelerde indirim fırsatları sunuyoruz. Detaylar için iletişime geçebilirsiniz."
+    q: "LGS deneme sınavları ne sıklıkla yapılıyor?",
+    a: "Tam kapsamlı pakette ayda 2, video paketinde ayda 1 deneme sınavı yapılıyor. Sınavlar hem online hem de basılı olarak uygulanır. Türkiye geneli ranking sistemi sayesinde kendinizi karşılaştırabilirsiniz."
   },
   {
-    q: "10 kişilik öğretmen kadrosu sabit mi?",
-    a: "Evet, sene başında tanıttığımız 10 kişilik uzman kadromuz, tüm yıl boyunca derslerinize giren ve sizi takip eden aynı ekiptir."
+    q: "LGS paket fiyatları nedir ve taksit seçenekleri var mı?",
+    a: "Paketlerimiz ₺599 ile ₺2.199 arasında değişmektedir. Kredi kartına 12 taksit imkanı, peşin ödemelerde %10 indirim ve okul turları için özel fiyatlandırma sunuyoruz."
+  },
+  {
+    q: "LGS müfredatındaki tüm konuları kapsıyor musunuz?",
+    a: "Evet, MEB'in belirlediği tüm LGS konuları (Matematik, Fen Bilgisi, Türkçe, Sosyal Bilgiler, İngilizce) tamamen kapsamlı bir şekilde öğretilmektedir."
   }
 ];
 

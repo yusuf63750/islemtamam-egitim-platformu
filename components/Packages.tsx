@@ -4,48 +4,48 @@ import { Button } from './Button';
 
 const packages = [
   {
-    name: "Dijital Destek",
-    description: "Kendi hızında çalışmak isteyenler için video ve kaynak arşivi.",
-    price: "₺750",
+    name: "LGS Video Arşivi",
+    description: "Kendi hızında çalışmak isteyenler için tüm LGS konularının video ve kaynak arşivi.",
+    price: "₺599",
     period: "/aylık",
     features: [
-      "Tüm Ders Videoları",
+      "Tüm LGS Ders Videoları",
       "PDF Konu Anlatımları",
-      "Aylık Online Deneme",
-      "Genel Tekrar Kampları",
+      "Aylık Deneme Sınavları",
+      "Çıkmış Soruların Çözümü",
       "Rehberlik Seminerleri"
     ],
     highlight: false,
     buttonVariant: "outline" as const
   },
   {
-    name: "Tam Kapsamlı Paket",
-    description: "Canlı dersler ve sıkı takip ile başarıyı şansa bırakmayın.",
-    price: "₺1.500",
+    name: "LGS Tam Hazırlık",
+    description: "Canlı LGS dersleri ve sıkı takip ile sınavda başarıyı garantileyin.",
+    price: "₺1.299",
     period: "/aylık",
     features: [
-      "Haftada 12 Saat Canlı Ders",
-      "Sınırsız Soru Çözüm Grubu",
-      "Birebir Öğrenci Koçluğu",
-      "Haftalık Ödev Takibi",
-      "Tüm Dijital Kaynaklar",
-      "Kunduz Soru Çözüm Üyeliği"
+      "Haftada 12 Saat Canlı LGS Dersler",
+      "Sınırsız LGS Soru Çözüm",
+      "Birebir Performans Koçluğu",
+      "Haftalık LGS Ödev Takibi",
+      "Tüm LGS Dijital Kaynakları",
+      "Ayda 2 Deneme Sınavı"
     ],
     highlight: true,
     buttonVariant: "primary" as const
   },
   {
-    name: "VIP Sınav Koçluğu",
-    description: "Sadece hedefe odaklananlar için özel birebir ilgi.",
-    price: "₺2.500",
+    name: "VIP LGS Koçluğu",
+    description: "LGS'ye maksimum hazırlık için kişiye özel birebir ilgi ve destek.",
+    price: "₺2.199",
     period: "/aylık",
     features: [
-      "Kişiye Özel Ders Programı",
-      "Haftada 4 Saat Özel Ders",
-      "7/24 Whatsapp Desteği",
-      "Psikolojik Danışmanlık",
+      "Kişiye Özel LGS Ders Programı",
+      "Haftada 5 Saat Özel LGS Dersi",
+      "7/24 Whatsapp Soru Desteği",
+      "LGS Psikolojik Danışmanlığı",
       "Veli Bilgilendirme Sistemi",
-      "Öncelikli Soru Çözümü"
+      "Prioriteli Soru Çözümü"
     ],
     highlight: false,
     buttonVariant: "outline" as const
@@ -57,12 +57,12 @@ export const Packages: React.FC = () => {
     <section id="paketler" className="py-20 bg-slate-50 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Eğitim Paketlerimiz</h2>
+          <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">LGS Eğitim Paketlerimiz</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Sana En Uygun Paketi Seç
+            Sana En Uygun LGS Paketini Seç
           </p>
           <p className="mt-4 max-w-2xl text-xl text-slate-500 mx-auto">
-            İster sadece kaynak desteği al, ister 10 kişilik öğretmen kadromuzla birebir hazırlan.
+            LGS'ye tam hazırlık için video destekli isen başla, live dersler istiyorsan tam kapsamlıyı seç.
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export const Packages: React.FC = () => {
 
         <div className="mt-12 text-center">
           <p className="text-slate-500 text-sm">
-            * Tüm paketlerimizde 14 gün iade garantisi bulunmaktadır. Kurumsal kayıtlar için iletişime geçiniz.
+            * Tüm paketlerimizde 14 gün iade garantisi bulunmaktadır. Okul turu paketleri için iletişime geçiniz.
           </p>
         </div>
       </div>

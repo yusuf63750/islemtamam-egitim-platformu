@@ -16,15 +16,15 @@ export const Hero: React.FC = () => {
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-sm font-medium text-slate-600">Yeni Dönem Kayıtları Başladı</span>
+              <span className="text-sm font-medium text-slate-600">LGS 2025 Kayıtları Açılmıştır</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
-              Hayalindeki Üniversite İçin <span className="text-primary-600">İşlem Tamam!</span>
+              Liselere Giriş Sınavında <span className="text-primary-600">Başarıya Ulaş!</span>
             </h1>
             
             <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              10 kişilik uzman öğretmen kadromuzla, sınav maratonunda yalnız değilsiniz. 
+              10 kişilik uzman öğretmen kadromuzla, LGS'ye tam hazırlık yapın. 
               Kişiye özel takip, canlı dersler ve sınırsız soru çözümü ile başarı tesadüf değil.
             </p>
 
@@ -40,10 +40,10 @@ export const Hero: React.FC = () => {
 
             <div className="pt-6 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-slate-500">
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-green-500" /> 10+ Yıl Tecrübe
+                <CheckCircle2 size={18} className="text-green-500" /> 15+ Yıl LGS Tecrübesi
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-green-500" /> %98 Başarı Oranı
+                <CheckCircle2 size={18} className="text-green-500" /> %95 Başarı Oranı
               </div>
             </div>
           </div>
@@ -65,10 +65,10 @@ export const Hero: React.FC = () => {
                       <img key={i} className="w-10 h-10 rounded-full border-2 border-white" src={`https://picsum.photos/100/100?random=${i}`} alt="Student" />
                     ))}
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-slate-900">5000+ Öğrenci</p>
-                    <p className="text-xs text-slate-500">Bize güveniyor</p>
-                  </div>
+              <div>
+                <p className="text-sm font-bold text-slate-900">8500+ Öğrenci</p>
+                <p className="text-xs text-slate-500">LGS başarısı için bize güveniyor</p>
+              </div>
                 </div>
               </div>
             </div>

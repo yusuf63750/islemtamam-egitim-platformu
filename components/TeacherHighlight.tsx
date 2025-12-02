@@ -4,10 +4,10 @@ import { Star, Award, GraduationCap } from 'lucide-react';
 export const TeacherHighlight: React.FC = () => {
   // Mock data for 4 of the 10 teachers to display as preview
   const teachers = [
-    { name: "Ahmet Yılmaz", branch: "Matematik", exp: "15 Yıl", img: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
-    { name: "Elif Demir", branch: "Fizik", exp: "12 Yıl", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
-    { name: "Murat Kaya", branch: "Türkçe", exp: "18 Yıl", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
-    { name: "Ayşe Çelik", branch: "Kimya", exp: "10 Yıl", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
+    { name: "Ahmet Yılmaz", branch: "Matematik LGS", exp: "15 Yıl", img: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
+    { name: "Elif Demir", branch: "Fen Bilgisi LGS", exp: "12 Yıl", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
+    { name: "Murat Kaya", branch: "Türkçe & Sosyal LGS", exp: "18 Yıl", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
+    { name: "Ayşe Çelik", branch: "İngilizce LGS", exp: "10 Yıl", img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" },
   ];
 
   return (
@@ -20,11 +20,11 @@ export const TeacherHighlight: React.FC = () => {
           
           <div className="lg:w-1/2 mb-12 lg:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              Sadece Bir Öğretmen Değil, <br />
-              <span className="text-primary-400">10 Kişilik Bir Takım</span>
+              LGS'ye 10 Kişilik <br />
+              <span className="text-primary-400">Öğretmen Ekibi ile Hazırlık</span>
             </h2>
             <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-              Başarı bireysel bir çaba değil, ekip işidir. İşlemTamam olarak her branşta uzmanlaşmış 10 kişilik öğretmen kadromuzla, öğrencinin her sorusuna, her ihtiyacına anında yanıt veriyoruz.
+              LGS başarısı ekip çalışmasının ürünüdür. Her branşta uzmanlaşmış 10 kişilik öğretmen kadromuzla, öğrencinin her sorusuna, her konu zayıflığına anında yanıt veriyoruz.
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -33,8 +33,8 @@ export const TeacherHighlight: React.FC = () => {
                   <Award className="text-yellow-400" size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg">Uzmanlık</h4>
-                  <p className="text-slate-400 text-sm">Her öğretmen kendi branşında en az 10 yıl deneyimli.</p>
+                  <h4 className="font-bold text-lg">LGS Uzmanı</h4>
+                  <p className="text-slate-400 text-sm">Her öğretmen LGS müfredatında 10+ yıl deneyimli.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -42,7 +42,7 @@ export const TeacherHighlight: React.FC = () => {
                   <GraduationCap className="text-blue-400" size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-lg">Mentörlük</h4>
+                  <h4 className="font-bold text-lg">LGS Koçluğu</h4>
                   <p className="text-slate-400 text-sm">Akademik başarının yanında sınav psikolojisi desteği.</p>
                 </div>
               </div>

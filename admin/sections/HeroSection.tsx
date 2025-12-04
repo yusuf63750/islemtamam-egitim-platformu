@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 import { SectionContainer } from '../components/SectionContainer';
 import { useEditableSection } from '../hooks/useEditableSection';
 import { StringListEditor } from '../components/StringListEditor';
+import { FileUploader } from '../components/FileUploader';
 
 export const HeroSection: React.FC = () => {
   const formId = useId();
@@ -130,19 +131,16 @@ export const HeroSection: React.FC = () => {
               className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
             />
           </div>
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">Tanıtım Videosu URL</label>
-            <input
-              type="text"
-              value={draft.videoUrl}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, videoUrl: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-              placeholder="https://www.youtube.com/embed/..."
-            />
-          </div>
         </div>
+
+        <FileUploader
+          label="Tanıtım Videosu (URL veya Dosya)"
+          value={draft.videoUrl}
+          onChange={(url) => setDraft((prev) => ({ ...prev, videoUrl: url }))}
+          accept="video"
+          placeholder="https://www.youtube.com/watch?v=... veya dosya yükleyin"
+          previewHeight="180px"
+        />
 
         <StringListEditor
           label="Hero İstatistikleri"
@@ -154,29 +152,25 @@ export const HeroSection: React.FC = () => {
           placeholder="Örn. %95 Başarı Oranı"
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">Hero Görseli URL</label>
-            <input
-              type="text"
-              value={draft.heroImageUrl}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, heroImageUrl: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">Hero Görseli Alt Metni</label>
-            <input
-              type="text"
-              value={draft.heroImageAlt}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, heroImageAlt: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
+        <FileUploader
+          label="Hero Görseli"
+          value={draft.heroImageUrl}
+          onChange={(url) => setDraft((prev) => ({ ...prev, heroImageUrl: url }))}
+          accept="image"
+          placeholder="https://... veya dosya yükleyin"
+          previewHeight="200px"
+        />
+        
+        <div className="space-y-3">
+          <label className="text-sm font-semibold text-slate-700">Hero Görseli Alt Metni</label>
+          <input
+            type="text"
+            value={draft.heroImageAlt}
+            onChange={(event) =>
+              setDraft((prev) => ({ ...prev, heroImageAlt: event.target.value }))
+            }
+            className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
+          />
         </div>
 
         <div className="space-y-4">

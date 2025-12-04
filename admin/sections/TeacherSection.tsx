@@ -4,6 +4,7 @@ import { useEditableSection } from '../hooks/useEditableSection';
 import { TeacherHighlightDetail, TeacherStat, TeacherIconKey } from '../../types';
 import { Plus, Trash2 } from 'lucide-react';
 import { StringListEditor } from '../components/StringListEditor';
+import { FileUploader } from '../components/FileUploader';
 
 const generateId = (prefix: string) => {
   const randomPart = typeof globalThis.crypto?.randomUUID === 'function'
@@ -318,17 +319,16 @@ export const TeacherSection: React.FC = () => {
               className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-slate-600">Kurucu Görseli URL</label>
-            <input
-              type="text"
-              value={draft.founderImageUrl}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, founderImageUrl: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
+          
+          <FileUploader
+            label="Kurucu Görseli"
+            value={draft.founderImageUrl}
+            onChange={(url) => setDraft((prev) => ({ ...prev, founderImageUrl: url }))}
+            accept="image"
+            placeholder="https://... veya dosya yükleyin"
+            previewHeight="200px"
+          />
+          
           <div className="space-y-2">
             <label className="text-xs font-semibold text-slate-600">Rozet Metni</label>
             <input

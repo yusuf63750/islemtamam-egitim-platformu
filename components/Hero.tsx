@@ -1,12 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from './Button';
 import { CheckCircle2, PlayCircle, ArrowRight, X } from 'lucide-react';
 import { useSiteContent } from '../context/SiteContentContext';
+
+// YouTube URL'lerini embed formatına dönüştür
+const getEmbedUrl = (url: string): string => {
+  if (!url) return '';
+  
+  // Zaten embed URL ise
+  if (url.includes('/embed/')) {
+    // youtube.com yerine youtube-nocookie.com kullan (X-Frame-Options hatası için)
+    return url.replace('youtube.com', 'youtube-nocookie.com');
+  }
+  
+  // youtube.com/watch?v=VIDEO_ID formatı
+  const watchMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (watchMatch) {
+    return `https://www.youtube-nocookie.com/embed/${watchMatch[1]}`;
+  }
+  
+  // youtu.be/VIDEO_ID formatı
+  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+  if (shortMatch) {
+    return `https://www.youtube-nocookie.com/embed/${shortMatch[1]}`;
+  }
+  
+  return url;
+};
+
+// URL'nin lokal video mu yoksa embed mi olduğunu kontrol et
+const isLocalVideo = (url: string): boolean => {
+  if (!url) return false;
+  return url.startsWith('data:video') || url.match(/\.(mp4|webm|ogg)$/i) !== null;
+};
 
 export const Hero: React.FC = () => {
   const { content } = useSiteContent();
   const hero = content.hero;
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  
+  const processedVideoUrl = useMemo(() => getEmbedUrl(hero.videoUrl), [hero.videoUrl]);
+  const isLocal = useMemo(() => isLocalVideo(hero.videoUrl), [hero.videoUrl]);
 
   const handleNavigation = (href: string) => {
     if (href.startsWith('#')) {
@@ -110,19 +144,28 @@ export const Hero: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
           <div className="relative w-full max-w-3xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
             <button
-              className="absolute top-3 right-3 bg-white/90 rounded-full p-2 text-slate-800 hover:bg-white transition"
+              className="absolute top-3 right-3 z-10 bg-white/90 rounded-full p-2 text-slate-800 hover:bg-white transition"
               onClick={() => setIsVideoOpen(false)}
               aria-label="Tanıtım videosunu kapat"
             >
               <X size={20} />
             </button>
-            <iframe
-              className="w-full h-full"
-              src={hero.videoUrl}
-              title="Tanıtım Videosu"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            {isLocal ? (
+              <video
+                className="w-full h-full"
+                src={hero.videoUrl}
+                controls
+                autoPlay
+              />
+            ) : (
+              <iframe
+                className="w-full h-full"
+                src={processedVideoUrl}
+                title="Tanıtım Videosu"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            )}
           </div>
         </div>
       )}

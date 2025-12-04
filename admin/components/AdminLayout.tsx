@@ -40,7 +40,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ onLogout }) => {
 
   return (
     <div className="min-h-screen bg-slate-100 flex">
-      <aside className="hidden lg:flex w-72 flex-col border-r border-slate-200 bg-white/95 backdrop-blur">
+      <aside className="hidden lg:flex w-72 flex-col fixed left-0 top-0 h-screen border-r border-slate-200 bg-white/95 backdrop-blur z-40">
         <div className="px-6 py-8 border-b border-slate-200">
           <p className="text-xs uppercase tracking-[0.3em] text-primary-500 font-semibold">İşlemTamam</p>
           <h2 className="text-xl font-bold text-slate-900 mt-2">Yönetim Paneli</h2>
@@ -81,19 +81,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ onLogout }) => {
             );
           })}
         </nav>
-        <div className="px-6 py-6 border-t border-slate-200">
-          <button
-            onClick={onLogout}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"
-          >
-            <LogOut size={16} />
-            Çıkış Yap
-          </button>
-        </div>
       </aside>
 
-      <div className="flex-1 flex flex-col">
-        <header className="flex items-center justify-between bg-white shadow-sm px-6 py-4 border-b border-slate-200">
+      <div className="flex-1 flex flex-col lg:ml-72">
+        <header className="sticky top-0 z-40 flex items-center justify-between bg-white shadow-sm px-6 py-4 border-b border-slate-200">
           <div>
             <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
               {activeSection ? activeSection.label : 'Admin Paneli'}
@@ -104,14 +95,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ onLogout }) => {
           </div>
           <button
             onClick={onLogout}
-            className="inline-flex lg:hidden items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 transition"
           >
             <LogOut size={16} />
             Çıkış Yap
           </button>
         </header>
 
-        <div className="lg:hidden border-b border-slate-200 bg-white/90 backdrop-blur">
+        <div className="lg:hidden border-b border-slate-200 bg-white/90 backdrop-blur sticky top-16 z-40">
           <div className="flex gap-2 overflow-x-auto px-4 py-3">
             {adminSections.map((section) => (
               <NavLink

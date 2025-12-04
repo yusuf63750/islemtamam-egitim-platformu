@@ -3,6 +3,13 @@ import { Button } from './Button';
 import { CheckCircle2, PlayCircle, ArrowRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
+  const handlePackagesClick = () => {
+    const packagesSection = document.getElementById('paketler');
+    if (packagesSection) {
+      packagesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
       {/* Background Decoration */}
@@ -29,7 +36,7 @@ export const Hero: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="primary" size="lg" className="gap-2">
+              <Button variant="primary" size="lg" className="gap-2" onClick={handlePackagesClick}>
                 Paketleri İncele <ArrowRight size={20} />
               </Button>
               <Button variant="white" size="lg" className="gap-2">

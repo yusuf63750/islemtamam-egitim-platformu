@@ -1,42 +1,22 @@
 import React from 'react';
 import { Trophy } from 'lucide-react';
-
-const stories = [
-  {
-    name: "Berkay Yıldız",
-    uni: "Kadıköy Anadolu Lisesi",
-    dept: "LGS 2024 - 890 Puan",
-    rank: "TR 250.",
-    quote: "Matematik net sayısını 8'den 42'ye çıkardım. İşlemTamam sayesinde LGS'de en iyi sonucumu aldım."
-  },
-  {
-    name: "Zeynep Kara",
-    uni: "Fenerbahçe Üniversite Lisesi",
-    dept: "LGS 2024 - 920 Puan",
-    rank: "TR 80.",
-    quote: "Disiplinli LGS programı ve haftalık takip sistemi hayat kurtarıcı oldu."
-  },
-  {
-    name: "Canan Erkin",
-    uni: "Bahçeşehir Koleji",
-    dept: "LGS 2024 - 875 Puan",
-    rank: "TR 340.",
-    quote: "Öğretmenlerin canlı LGS derslerinde anında soru sorabilmek çok etkili oldu."
-  }
-];
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const SuccessStories: React.FC = () => {
+  const { content } = useSiteContent();
+  const successStories = content.successStories;
+
   return (
     <section id="basarilar" className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">LGS Başarı Öyküleri</h2>
-          <p className="mt-4 text-lg text-slate-600">Onlar hedeflerine ulaştı, şimdi sıra sende.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900">{successStories.title}</h2>
+          <p className="mt-4 text-lg text-slate-600">{successStories.subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {stories.map((story, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
+          {successStories.stories.map((story) => (
+            <div key={story.id} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
               <div className="absolute top-0 right-0 bg-primary-600 text-white px-4 py-1 rounded-bl-xl text-xs font-bold">
                 {story.rank}
               </div>
@@ -51,8 +31,8 @@ export const SuccessStories: React.FC = () => {
 
               <div className="border-t border-slate-100 pt-6">
                 <h4 className="font-bold text-lg text-slate-900">{story.name}</h4>
-                <p className="text-primary-600 font-medium">{story.uni}</p>
-                <p className="text-sm text-slate-500">{story.dept}</p>
+                <p className="text-primary-600 font-medium">{story.school}</p>
+                <p className="text-sm text-slate-500">{story.score}</p>
               </div>
             </div>
           ))}

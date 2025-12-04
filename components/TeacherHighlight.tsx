@@ -1,7 +1,16 @@
 import React from 'react';
 import { Award, GraduationCap } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
+
+const iconMap = {
+  award: Award,
+  graduationCap: GraduationCap,
+} as const;
 
 export const TeacherHighlight: React.FC = () => {
+  const { content } = useSiteContent();
+  const teacherHighlight = content.teacherHighlight;
+
   return (
     <section id="kadro" className="py-20 bg-slate-900 text-white overflow-hidden relative">
       {/* Decorative background pattern */}
@@ -12,52 +21,38 @@ export const TeacherHighlight: React.FC = () => {
           
           <div className="lg:w-1/2 mb-12 lg:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-              LGS'ye 10 Kişilik <br />
-              <span className="text-primary-400">Öğretmen Ekibi ile Hazırlık</span>
+              {teacherHighlight.title} <br />
+              <span className="text-primary-400">{teacherHighlight.highlight}</span>
             </h2>
             <p className="text-slate-300 text-lg mb-8 leading-relaxed">
-              LGS başarısı ekip çalışmasının ürünüdür. Her branşta uzmanlaşmış 10 kişilik öğretmen kadromuzla, öğrencinin her sorusuna, her konu zayıflığına anında yanıt veriyoruz.
+              {teacherHighlight.description}
             </p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700">
-                  <Award className="text-yellow-400" size={24} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">LGS Uzmanı</h4>
-                  <p className="text-slate-400 text-sm">Her öğretmen LGS müfredatında 10+ yıl deneyimli.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="bg-slate-800 p-3 rounded-lg border border-slate-700">
-                  <GraduationCap className="text-blue-400" size={24} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg">LGS Koçluğu</h4>
-                  <p className="text-slate-400 text-sm">Akademik başarının yanında sınav psikolojisi desteği.</p>
-                </div>
-              </div>
+              {teacherHighlight.details.map((detail) => {
+                const Icon = iconMap[detail.icon] ?? Award;
+                return (
+                  <div key={detail.id} className="flex items-start gap-4">
+                    <div className="bg-slate-800 p-3 rounded-lg border border-slate-700">
+                      <Icon className={detail.icon === 'award' ? 'text-yellow-400' : 'text-blue-400'} size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">{detail.title}</h4>
+                      <p className="text-slate-400 text-sm">{detail.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* İstatistikler */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-700">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-primary-400">15+</p>
-                <p className="text-xs text-slate-400">Yıl Deneyim</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-primary-400">5000+</p>
-                <p className="text-xs text-slate-400">Mezun Öğrenci</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-primary-400">%95</p>
-                <p className="text-xs text-slate-400">Başarı Oranı</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-primary-400">250+</p>
-                <p className="text-xs text-slate-400">Aktif Öğrenci</p>
-              </div>
+              {teacherHighlight.stats.map((stat) => (
+                <div key={stat.id} className="text-center">
+                  <p className="text-2xl font-bold text-primary-400">{stat.value}</p>
+                  <p className="text-xs text-slate-400">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -68,35 +63,30 @@ export const TeacherHighlight: React.FC = () => {
                 <div className="relative mb-6">
                   <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary-500 shadow-lg shadow-primary-500/30">
                     <img 
-                      src="/kurucu.jpg" 
-                      alt="M.Osman DOĞRUER" 
+                      src={teacherHighlight.founderImageUrl} 
+                      alt={teacherHighlight.founderName} 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-bold">
-                    Kurucu
+                    {teacherHighlight.founderBadgeText}
                   </div>
                 </div>
                 
                 {/* Kurucu İsmi */}
-                <h3 className="text-2xl font-bold text-white mb-2">M.Osman DOĞRUER</h3>
-                <p className="text-primary-400 font-semibold mb-4">İşlem Tamam Eğitim Kurucusu</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{teacherHighlight.founderName}</h3>
+                <p className="text-primary-400 font-semibold mb-4">{teacherHighlight.founderTitle}</p>
                 
                 {/* Hakkında Yazısı */}
                 <div className="text-slate-300 leading-relaxed space-y-4">
                   <p className="text-lg italic border-l-4 border-primary-500 pl-4 text-left">
-                    "Eğitim sadece bir meslek değil, geleceği inşa etme sanatıdır."
+                    {teacherHighlight.founderQuote}
                   </p>
-                  <p className="text-sm">
-                    Yılların tecrübesiyle eğitim sektörünün en iyilerinden biri olmayı başaran M.Osman DOĞRUER, 
-                    binlerce öğrenciyi hayallerine kavuşturmanın gururunu yaşıyor. LGS'de %1'lik dilime 
-                    giren yüzlerce öğrenci yetiştiren eğitim vizyoneridir.
-                  </p>
-                  <p className="text-sm">
-                    <span className="text-primary-400 font-semibold">İşlem Tamam</span> markasını, 
-                    "Her öğrenci başarabilir" felsefesiyle kurdu. Disiplinli çalışma, doğru strateji 
-                    ve kararlılıkla her hedefin ulaşılabilir olduğuna inanır.
-                  </p>
+                  {teacherHighlight.founderBio.map((paragraph, index) => (
+                    <p key={index} className="text-sm">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>

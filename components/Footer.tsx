@@ -1,7 +1,23 @@
 import React from 'react';
 import { BookOpen, Instagram, Twitter, Youtube, Phone, Mail, MapPin } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
+
+const socialIconMap = {
+  instagram: Instagram,
+  twitter: Twitter,
+  youtube: Youtube,
+} as const;
+
+const contactIconMap = {
+  address: MapPin,
+  phone: Phone,
+  email: Mail,
+} as const;
 
 export const Footer: React.FC = () => {
+  const { content } = useSiteContent();
+  const footer = content.footer;
+
   return (
     <footer className="bg-slate-900 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,17 +30,22 @@ export const Footer: React.FC = () => {
                 <BookOpen size={20} strokeWidth={3} />
               </div>
               <span className="text-xl font-bold">
-                İşlem<span className="text-primary-500">Tamam</span>
+                {footer.brandName}
+                <span className="text-primary-500">{footer.brandHighlight}</span>
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              LGS'ye hazırlık için 10 kişilik öğretmen kadromuzla başarıya ulaşın. 
-              Başarıyı şansa bırakmayın, işi LGS uzmanlarına bırakın.
+              {footer.brandDescription}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-slate-400 hover:text-white transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors"><Twitter size={20} /></a>
-              <a href="#" className="text-slate-400 hover:text-white transition-colors"><Youtube size={20} /></a>
+              {footer.socials.map((social) => {
+                const Icon = socialIconMap[social.platform];
+                return (
+                  <a key={social.id} href={social.url} className="text-slate-400 hover:text-white transition-colors" target="_blank" rel="noreferrer">
+                    <Icon size={20} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -32,9 +53,11 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">Hızlı Erişim</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="#paketler" className="hover:text-primary-400 transition-colors">Paketler</a></li>
-              <li><a href="#kadro" className="hover:text-primary-400 transition-colors">Öğretmen Kadrosu</a></li>
-              <li><a href="#basarilar" className="hover:text-primary-400 transition-colors">Başarı Hikayeleri</a></li>
+              {footer.quickLinks.map((link) => (
+                <li key={link.id}>
+                  <a href={link.href} className="hover:text-primary-400 transition-colors">{link.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -42,8 +65,11 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">Kaynaklar</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="#yorumlar" className="hover:text-primary-400 transition-colors">Öğrenci Yorumları</a></li>
-              <li><a href="#sss" className="hover:text-primary-400 transition-colors">Sıkça Sorulan Sorular</a></li>
+              {footer.resourceLinks.map((link) => (
+                <li key={link.id}>
+                  <a href={link.href} className="hover:text-primary-400 transition-colors">{link.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -51,24 +77,21 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6">İletişim</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-primary-500 shrink-0 mt-0.5" />
-                <span>Mecidiyeköy Mah. Büyükdere Cad. No:123 Şişli/İstanbul</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="text-primary-500 shrink-0" />
-                <span>0850 123 45 67</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-primary-500 shrink-0" />
-                <span>iletisim@islemtamam.com</span>
-              </li>
+              {footer.contact.map((item) => {
+                const Icon = contactIconMap[item.type];
+                return (
+                  <li key={item.id} className={`flex ${item.type === 'address' ? 'items-start' : 'items-center'} gap-3`}>
+                    <Icon size={18} className={`text-primary-500 shrink-0 ${item.type === 'address' ? 'mt-0.5' : ''}`} />
+                    <span>{item.value}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
 
         <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
-          <p>&copy; 2024 LGS Hazırlık Platformu - İşlemTamam. Tüm hakları saklıdır.</p>
+          <p>{footer.copyright}</p>
         </div>
       </div>
     </footer>

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from './Button';
-import { CheckCircle2, PlayCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle2, PlayCircle, ArrowRight, X } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const Hero: React.FC = () => {
-  const handlePackagesClick = () => {
-    const packagesSection = document.getElementById('paketler');
-    if (packagesSection) {
-      packagesSection.scrollIntoView({ behavior: 'smooth' });
+  const { content } = useSiteContent();
+  const hero = content.hero;
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const handleNavigation = (href: string) => {
+    if (href.startsWith('#')) {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.open(href, '_blank');
     }
   };
 
@@ -23,35 +32,44 @@ export const Hero: React.FC = () => {
           <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-sm font-medium text-slate-600">LGS 2025 Kayıtları Açılmıştır</span>
+              <span className="text-sm font-medium text-slate-600">{hero.badgeText}</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
-              Liselere Giriş Sınavında <span className="text-primary-600">Başarıya Ulaş!</span>
+              {hero.title} <span className="text-primary-600">{hero.highlight}</span>
             </h1>
             
             <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              10 kişilik uzman öğretmen kadromuzla, LGS'ye tam hazırlık yapın. 
-              Kişiye özel takip, canlı dersler ve sınırsız soru çözümü ile başarı tesadüf değil.
+              {hero.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="primary" size="lg" className="gap-2" onClick={handlePackagesClick}>
-                Paketleri İncele <ArrowRight size={20} />
+              <Button
+                variant="primary"
+                size="lg"
+                className="gap-2"
+                onClick={() => handleNavigation(hero.primaryButtonHref)}
+              >
+                {hero.primaryButtonText} <ArrowRight size={20} />
               </Button>
-              <Button variant="white" size="lg" className="gap-2">
+              <Button
+                variant="white"
+                size="lg"
+                className="gap-2"
+                onClick={() => setIsVideoOpen(true)}
+                disabled={!hero.videoUrl}
+              >
                 <PlayCircle size={20} className="text-primary-600" />
-                Tanıtım Videosu
+                {hero.secondaryButtonText}
               </Button>
             </div>
 
             <div className="pt-6 flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-slate-500">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-green-500" /> 15+ Yıl LGS Tecrübesi
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-green-500" /> %95 Başarı Oranı
-              </div>
+              {hero.stats.map((stat) => (
+                <div key={stat} className="flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-green-500" /> {stat}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -59,8 +77,8 @@ export const Hero: React.FC = () => {
           <div className="relative lg:ml-auto">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-white">
               <img 
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" 
-                alt="Happy Students" 
+                src={hero.heroImageUrl}
+                alt={hero.heroImageAlt}
                 className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
               />
               
@@ -68,13 +86,13 @@ export const Hero: React.FC = () => {
               <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur p-4 rounded-xl shadow-lg border border-slate-100 max-w-xs">
                 <div className="flex items-center gap-3">
                   <div className="flex -space-x-3">
-                    {[1,2,3,4].map(i => (
-                      <img key={i} className="w-10 h-10 rounded-full border-2 border-white" src={`https://picsum.photos/100/100?random=${i}`} alt="Student" />
+                    {hero.badgeInfo.avatarUrls.map((url, index) => (
+                      <img key={url} className="w-10 h-10 rounded-full border-2 border-white" src={url} alt={`Öğrenci ${index + 1}`} />
                     ))}
                   </div>
               <div>
-                <p className="text-sm font-bold text-slate-900">8500+ Öğrenci</p>
-                <p className="text-xs text-slate-500">LGS başarısı için bize güveniyor</p>
+                <p className="text-sm font-bold text-slate-900">{hero.badgeInfo.studentCount}</p>
+                <p className="text-xs text-slate-500">{hero.badgeInfo.studentSubtext}</p>
               </div>
                 </div>
               </div>
@@ -87,6 +105,27 @@ export const Hero: React.FC = () => {
           
         </div>
       </div>
+
+      {isVideoOpen && hero.videoUrl && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+          <div className="relative w-full max-w-3xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
+            <button
+              className="absolute top-3 right-3 bg-white/90 rounded-full p-2 text-slate-800 hover:bg-white transition"
+              onClick={() => setIsVideoOpen(false)}
+              aria-label="Tanıtım videosunu kapat"
+            >
+              <X size={20} />
+            </button>
+            <iframe
+              className="w-full h-full"
+              src={hero.videoUrl}
+              title="Tanıtım Videosu"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

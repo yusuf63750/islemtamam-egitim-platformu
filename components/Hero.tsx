@@ -16,8 +16,9 @@ const slides = [
     ],
     buttonText: 'ÜCRETSİZ BAŞVUR',
     buttonHref: '#basvuru',
-    bgGradient: 'from-blue-600 via-blue-500 to-cyan-400',
+    bgGradient: 'from-blue-600/80 via-blue-500/80 to-cyan-400/80',
     emoji: '🎓',
+    bgImage: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&h=1080&fit=crop', // Çocuklar sınıfta
   },
   {
     id: 2,
@@ -31,8 +32,9 @@ const slides = [
     ],
     buttonText: 'HEMEN BAŞLA',
     buttonHref: '#paketler',
-    bgGradient: 'from-emerald-600 via-teal-500 to-cyan-400',
+    bgGradient: 'from-emerald-600/80 via-teal-500/80 to-cyan-400/80',
     emoji: '🚀',
+    bgImage: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop', // Öğrenciler bilgisayar başında
   },
   {
     id: 3,
@@ -46,8 +48,9 @@ const slides = [
     ],
     buttonText: 'LGS PAKETLERİ',
     buttonHref: '#paketler',
-    bgGradient: 'from-purple-600 via-violet-500 to-pink-400',
+    bgGradient: 'from-purple-600/80 via-violet-500/80 to-pink-400/80',
     emoji: '⭐',
+    bgImage: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&h=1080&fit=crop', // Mutlu öğrenciler
   },
 ];
 
@@ -87,7 +90,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[650px] md:min-h-[700px] overflow-hidden pt-28 md:pt-32">
+    <section className="relative min-h-[650px] md:min-h-[1000px] overflow-hidden pt-28 md:pt-32">
       {/* Floating Fun Emojis */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
         {floatingEmojis.map((emoji, i) => (
@@ -113,8 +116,20 @@ export const Hero: React.FC = () => {
           className={`absolute inset-0 transition-all duration-700 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
         >
-          {/* Gradient Background */}
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src={slide.bgImage}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Gradient Overlay */}
           <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgGradient}`}></div>
+
+          {/* Dark Overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/30"></div>
 
           {/* Animated Pattern Overlay */}
           <div className="absolute inset-0 opacity-10">

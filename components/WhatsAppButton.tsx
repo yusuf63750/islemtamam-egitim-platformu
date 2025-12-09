@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ChevronUp } from 'lucide-react';
 
-// WhatsApp ve Instagram için floating butonlar
+// WhatsApp, Instagram ve Yukarı Çık butonları
 export const SocialFloatingButtons: React.FC = () => {
     const whatsappNumber = '905001234567'; // Değiştirin
     const instagramHandle = 'islemtamam'; // Değiştirin
+    const [showScrollTop, setShowScrollTop] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Hero bölümünü geçince göster (yaklaşık 90vh)
+            const heroHeight = window.innerHeight * 0.9;
+            setShowScrollTop(window.scrollY > heroHeight);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+            {/* Scroll to Top Button - Hero'yu geçince görünür */}
+            <button
+                onClick={scrollToTop}
+                className={`flex items-center justify-center w-14 h-14 rounded-full bg-slate-800 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl hover:bg-slate-700 ${showScrollTop ? 'opacity-100 translate-y-0 animate-bounce-slow' : 'opacity-0 translate-y-4 pointer-events-none'
+                    }`}
+                aria-label="Yukarı Çık"
+            >
+                <ChevronUp className="w-7 h-7 text-white" />
+            </button>
+
             {/* Instagram Button */}
             <a
                 href={`https://instagram.com/${instagramHandle}`}

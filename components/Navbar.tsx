@@ -29,7 +29,6 @@ export const Navbar: React.FC = () => {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       } else {
-        // If element not found (maybe we are on admin page), go to home then scroll
         if (location.pathname !== '/') {
           navigate('/');
           setTimeout(() => {
@@ -54,13 +53,20 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleNavigation('#hero')}>
-              <img src="/LOGO.png" alt="İşlemTamam Logo" className="w-12 h-12 object-contain" />
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => handleNavigation('#hero')}>
+              {/* Logo */}
+              <img
+                src="/LOGO.png"
+                alt="İşlemTamam Logo"
+                className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
+              />
+
+              {/* Logo Text - Büyütülmüş ve basit gradient animasyon */}
               <div className="flex flex-col leading-tight">
-                <span className="text-lg font-bold tracking-tight uppercase text-slate-900">
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight uppercase bg-gradient-to-r from-primary-600 via-blue-500 to-primary-600 bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-x">
                   {navbar.logoText}
                 </span>
-                <span className="text-slate-600 text-xs">
+                <span className="text-slate-600 text-xs sm:text-sm group-hover:text-primary-500 transition-colors">
                   {navbar.tagline}
                 </span>
               </div>
@@ -72,9 +78,10 @@ export const Navbar: React.FC = () => {
                 <button
                   key={link.id}
                   onClick={() => handleNavigation(link.href)}
-                  className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
+                  className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors relative group"
                 >
                   {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                 </button>
               ))}
               <Button

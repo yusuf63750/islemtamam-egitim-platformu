@@ -3,15 +3,15 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminLayout } from './components/AdminLayout';
 import { HeroSection } from './sections/HeroSection';
-import { FeaturesSection } from './sections/FeaturesSection';
 import { PackagesSection } from './sections/PackagesSection';
-import { TeacherSection } from './sections/TeacherSection';
-import { SuccessSection } from './sections/SuccessSection';
 import { TestimonialsSection } from './sections/TestimonialsSection';
 import { FaqSection } from './sections/FaqSection';
-import { CtaSection } from './sections/CtaSection';
 import { NavbarSection } from './sections/NavbarSection';
 import { FooterSection } from './sections/FooterSection';
+import { SmartLearningSection } from './sections/SmartLearningSection';
+import { SolutionsSection } from './sections/SolutionsSection';
+import { TeamSection } from './sections/TeamSection';
+import { BlogSection } from './sections/BlogSection';
 
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'admin';
@@ -65,13 +65,13 @@ export const AdminApp: React.FC = () => {
       >
         <Route index element={<Navigate to="content/hero" replace />} />
         <Route path="content/hero" element={<HeroSection />} />
-        <Route path="content/features" element={<FeaturesSection />} />
+        <Route path="content/smart-learning" element={<SmartLearningSection />} />
+        <Route path="content/solutions" element={<SolutionsSection />} />
         <Route path="content/packages" element={<PackagesSection />} />
-        <Route path="content/teacher" element={<TeacherSection />} />
-        <Route path="content/success" element={<SuccessSection />} />
+        <Route path="content/team" element={<TeamSection />} />
         <Route path="content/testimonials" element={<TestimonialsSection />} />
         <Route path="content/faq" element={<FaqSection />} />
-        <Route path="content/cta" element={<CtaSection />} />
+        <Route path="content/blog" element={<BlogSection />} />
         <Route path="content/navbar" element={<NavbarSection />} />
         <Route path="content/footer" element={<FooterSection />} />
         <Route path="*" element={<Navigate to="content/hero" replace />} />

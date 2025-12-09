@@ -1,418 +1,299 @@
-import React, { useId } from 'react';
-import { SectionContainer } from '../components/SectionContainer';
-import { useEditableSection } from '../hooks/useEditableSection';
-import { SocialLink, FooterLink, ContactItem } from '../../types';
-import { Plus, Trash2, Instagram, Twitter, Youtube, MapPin, Phone, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { LayoutTemplate, Save, Plus, Trash2, Instagram, Twitter, Youtube, Phone, Mail, MapPin } from 'lucide-react';
 
-const generateId = (prefix: string) => {
-  const randomPart = typeof globalThis.crypto?.randomUUID === 'function'
-    ? globalThis.crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
-  return `${prefix}-${randomPart}`;
+interface FooterLink {
+  id: string;
+  label: string;
+  href: string;
+}
+
+interface SocialLink {
+  id: string;
+  platform: 'instagram' | 'twitter' | 'youtube';
+  url: string;
+}
+
+interface ContactInfo {
+  id: string;
+  type: 'phone' | 'email' | 'address';
+  value: string;
+}
+
+const initialQuickLinks: FooterLink[] = [
+  { id: '1', label: 'Ana Sayfa', href: '#' },
+  { id: '2', label: 'Paketler', href: '#paketler' },
+  { id: '3', label: 'Hakkımızda', href: '#kadro' },
+  { id: '4', label: 'Blog', href: '#blog' },
+  { id: '5', label: 'İletişim', href: '#iletisim' },
+];
+
+const initialResourceLinks: FooterLink[] = [
+  { id: '1', label: 'SSS', href: '#sss' },
+  { id: '2', label: 'Gizlilik Politikası', href: '#' },
+  { id: '3', label: 'Kullanım Şartları', href: '#' },
+  { id: '4', label: 'Destek', href: '#' },
+];
+
+const initialSocials: SocialLink[] = [
+  { id: '1', platform: 'instagram', url: 'https://instagram.com/islemtamam' },
+  { id: '2', platform: 'twitter', url: 'https://twitter.com/islemtamam' },
+  { id: '3', platform: 'youtube', url: 'https://youtube.com/islemtamam' },
+];
+
+const initialContacts: ContactInfo[] = [
+  { id: '1', type: 'address', value: 'Atatürk Cad. No:123, Kadıköy, İstanbul' },
+  { id: '2', type: 'phone', value: '+90 (532) 123 45 67' },
+  { id: '3', type: 'email', value: 'info@islemtamam.com' },
+];
+
+const socialIcons = {
+  instagram: Instagram,
+  twitter: Twitter,
+  youtube: Youtube,
 };
 
-const createSocialLink = (): SocialLink => ({
-  id: generateId('social'),
-  platform: 'instagram',
-  url: 'https://',
-});
-
-const createFooterLink = (): FooterLink => ({
-  id: generateId('footerlink'),
-  label: 'Yeni Link',
-  href: '#',
-});
-
-const createContactItem = (): ContactItem => ({
-  id: generateId('contact'),
-  type: 'phone',
-  value: '',
-});
-
-const platformOptions: { value: SocialLink['platform']; label: string; icon: React.ReactNode }[] = [
-  { value: 'instagram', label: 'Instagram', icon: <Instagram size={16} /> },
-  { value: 'twitter', label: 'Twitter', icon: <Twitter size={16} /> },
-  { value: 'youtube', label: 'YouTube', icon: <Youtube size={16} /> },
-];
-
-const contactTypeOptions: { value: ContactItem['type']; label: string; icon: React.ReactNode }[] = [
-  { value: 'address', label: 'Adres', icon: <MapPin size={16} /> },
-  { value: 'phone', label: 'Telefon', icon: <Phone size={16} /> },
-  { value: 'email', label: 'E-posta', icon: <Mail size={16} /> },
-];
+const contactIcons = {
+  phone: Phone,
+  email: Mail,
+  address: MapPin,
+};
 
 export const FooterSection: React.FC = () => {
-  const formId = useId();
-  const { draft, setDraft, save, resetToCurrent, loadDefaults, isDirty } = useEditableSection('footer');
+  const [brandDescription, setBrandDescription] = useState('MEB müfredatına %100 uyumlu, yapay zeka destekli akıllı öğrenme platformu. 15 yılı aşkın deneyimle eğitimde fark yaratıyoruz.');
+  const [copyright, setCopyright] = useState('© 2024 İşlemTamam. Tüm hakları saklıdır.');
+  const [quickLinks, setQuickLinks] = useState<FooterLink[]>(initialQuickLinks);
+  const [resourceLinks, setResourceLinks] = useState<FooterLink[]>(initialResourceLinks);
+  const [socials, setSocials] = useState<SocialLink[]>(initialSocials);
+  const [contacts, setContacts] = useState<ContactInfo[]>(initialContacts);
+  const [saved, setSaved] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    save();
-  };
-
-  // Social Links
-  const addSocialLink = () => {
-    setDraft((prev) => ({ ...prev, socials: [...prev.socials, createSocialLink()] }));
-  };
-
-  const updateSocialLink = (id: string, updater: (s: SocialLink) => SocialLink) => {
-    setDraft((prev) => ({
-      ...prev,
-      socials: prev.socials.map((s) => (s.id === id ? updater(s) : s)),
-    }));
-  };
-
-  const removeSocialLink = (id: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      socials: prev.socials.filter((s) => s.id !== id),
-    }));
+  const handleSave = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
   };
 
   // Quick Links
   const addQuickLink = () => {
-    setDraft((prev) => ({ ...prev, quickLinks: [...prev.quickLinks, createFooterLink()] }));
+    setQuickLinks([...quickLinks, { id: String(Date.now()), label: 'Yeni Link', href: '#' }]);
   };
-
-  const updateQuickLink = (id: string, updater: (l: FooterLink) => FooterLink) => {
-    setDraft((prev) => ({
-      ...prev,
-      quickLinks: prev.quickLinks.map((l) => (l.id === id ? updater(l) : l)),
-    }));
+  const deleteQuickLink = (id: string) => {
+    setQuickLinks(quickLinks.filter(l => l.id !== id));
   };
-
-  const removeQuickLink = (id: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      quickLinks: prev.quickLinks.filter((l) => l.id !== id),
-    }));
+  const updateQuickLink = (id: string, field: keyof FooterLink, value: string) => {
+    setQuickLinks(quickLinks.map(l => l.id === id ? { ...l, [field]: value } : l));
   };
 
   // Resource Links
   const addResourceLink = () => {
-    setDraft((prev) => ({ ...prev, resourceLinks: [...prev.resourceLinks, createFooterLink()] }));
+    setResourceLinks([...resourceLinks, { id: String(Date.now()), label: 'Yeni Link', href: '#' }]);
+  };
+  const deleteResourceLink = (id: string) => {
+    setResourceLinks(resourceLinks.filter(l => l.id !== id));
+  };
+  const updateResourceLink = (id: string, field: keyof FooterLink, value: string) => {
+    setResourceLinks(resourceLinks.map(l => l.id === id ? { ...l, [field]: value } : l));
   };
 
-  const updateResourceLink = (id: string, updater: (l: FooterLink) => FooterLink) => {
-    setDraft((prev) => ({
-      ...prev,
-      resourceLinks: prev.resourceLinks.map((l) => (l.id === id ? updater(l) : l)),
-    }));
+  // Socials
+  const updateSocial = (id: string, url: string) => {
+    setSocials(socials.map(s => s.id === id ? { ...s, url } : s));
   };
 
-  const removeResourceLink = (id: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      resourceLinks: prev.resourceLinks.filter((l) => l.id !== id),
-    }));
-  };
-
-  // Contact Items
-  const addContactItem = () => {
-    setDraft((prev) => ({ ...prev, contact: [...prev.contact, createContactItem()] }));
-  };
-
-  const updateContactItem = (id: string, updater: (c: ContactItem) => ContactItem) => {
-    setDraft((prev) => ({
-      ...prev,
-      contact: prev.contact.map((c) => (c.id === id ? updater(c) : c)),
-    }));
-  };
-
-  const removeContactItem = (id: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      contact: prev.contact.filter((c) => c.id !== id),
-    }));
+  // Contacts
+  const updateContact = (id: string, value: string) => {
+    setContacts(contacts.map(c => c.id === id ? { ...c, value } : c));
   };
 
   return (
-    <SectionContainer
-      title="Footer"
-      description="Alt bilgi alanındaki iletişim ve link detaylarını düzenleyin."
-      actions={
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={loadDefaults}
-            className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
-          >
-            Varsayılanları Yükle
-          </button>
-          <button
-            type="button"
-            onClick={resetToCurrent}
-            disabled={!isDirty}
-            className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Değişiklikleri Geri Al
-          </button>
-          <button
-            type="submit"
-            form={formId}
-            disabled={!isDirty}
-            className="rounded-xl bg-primary-600 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Kaydet
-          </button>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center gap-3 pb-6 border-b border-slate-200">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+          <LayoutTemplate className="w-6 h-6 text-white" />
         </div>
-      }
-    >
-      <form id={formId} className="space-y-8" onSubmit={handleSubmit}>
-        <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-slate-700">Marka Bilgileri</h3>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-3">
-              <label className="text-xs font-semibold text-slate-600">Marka Adı</label>
-              <input
-                type="text"
-                value={draft.brandName}
-                onChange={(event) =>
-                  setDraft((prev) => ({ ...prev, brandName: event.target.value }))
-                }
-                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-xs font-semibold text-slate-600">Vurgulu Metin</label>
-              <input
-                type="text"
-                value={draft.brandHighlight}
-                onChange={(event) =>
-                  setDraft((prev) => ({ ...prev, brandHighlight: event.target.value }))
-                }
-                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-              />
-            </div>
-          </div>
-          <div className="space-y-3">
-            <label className="text-xs font-semibold text-slate-600">Marka Açıklaması</label>
-            <textarea
-              value={draft.brandDescription}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, brandDescription: event.target.value }))
-              }
-              rows={3}
-              className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="text-xs font-semibold text-slate-600">Telif Hakkı Metni</label>
-            <input
-              type="text"
-              value={draft.copyright}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, copyright: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900">Footer</h2>
+          <p className="text-slate-500">Alt bilgi ve sosyal medya linklerini düzenleyin</p>
         </div>
+      </div>
 
-        {/* Sosyal Medya Linkleri */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">Sosyal Medya Linkleri</h3>
-            <button
-              type="button"
-              onClick={addSocialLink}
-              className="rounded-xl bg-primary-100 text-primary-700 px-3 py-1.5 text-xs font-semibold hover:bg-primary-200 transition flex items-center gap-1"
-            >
-              <Plus size={14} /> Ekle
-            </button>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2">
-            {draft.socials.map((social) => (
-              <div key={social.id} className="rounded-xl border border-slate-200 bg-white/70 p-4 flex items-center gap-3">
-                <select
-                  value={social.platform}
-                  onChange={(event) =>
-                    updateSocialLink(social.id, (s) => ({
-                      ...s,
-                      platform: event.target.value as SocialLink['platform'],
-                    }))
-                  }
-                  className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100 bg-white"
-                >
-                  {platformOptions.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
+      {/* Brand Description */}
+      <div className="space-y-4 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+        <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+          📝 Marka Açıklaması
+        </h3>
+        <textarea
+          value={brandDescription}
+          onChange={(e) => setBrandDescription(e.target.value)}
+          rows={3}
+          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition resize-none"
+          placeholder="Marka hakkında kısa açıklama..."
+        />
+      </div>
+
+      {/* Social Media */}
+      <div className="space-y-4 p-6 bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl border border-pink-100">
+        <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+          🌐 Sosyal Medya Linkleri
+        </h3>
+        <div className="space-y-3">
+          {socials.map((social) => {
+            const Icon = socialIcons[social.platform];
+            return (
+              <div key={social.id} className="flex gap-4 items-center">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${social.platform === 'instagram' ? 'bg-gradient-to-br from-pink-500 to-purple-500' :
+                    social.platform === 'twitter' ? 'bg-blue-500' : 'bg-red-500'
+                  }`}>
+                  <Icon size={20} className="text-white" />
+                </div>
                 <input
                   type="text"
                   value={social.url}
-                  onChange={(event) =>
-                    updateSocialLink(social.id, (s) => ({ ...s, url: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder="https://..."
+                  onChange={(e) => updateSocial(social.id, e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+                  placeholder={`https://${social.platform}.com/...`}
                 />
-                <button
-                  type="button"
-                  onClick={() => removeSocialLink(social.id)}
-                  className="rounded-lg border border-red-200 bg-red-50 text-red-600 p-2 hover:bg-red-100 transition"
-                  aria-label="Sil"
-                >
-                  <Trash2 size={14} />
-                </button>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Hızlı Linkler */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">Hızlı Linkler</h3>
-            <button
-              type="button"
-              onClick={addQuickLink}
-              className="rounded-xl bg-primary-100 text-primary-700 px-3 py-1.5 text-xs font-semibold hover:bg-primary-200 transition flex items-center gap-1"
-            >
-              <Plus size={14} /> Ekle
-            </button>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2">
-            {draft.quickLinks.map((link) => (
-              <div key={link.id} className="rounded-xl border border-slate-200 bg-white/70 p-4 flex items-center gap-3">
+      {/* Contact Info */}
+      <div className="space-y-4 p-6 bg-slate-900 rounded-2xl text-white">
+        <h3 className="font-semibold flex items-center gap-2">
+          📞 İletişim Bilgileri
+        </h3>
+        <div className="space-y-3">
+          {contacts.map((contact) => {
+            const Icon = contactIcons[contact.type];
+            return (
+              <div key={contact.id} className="flex gap-4 items-center">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                  <Icon size={18} className="text-primary-400" />
+                </div>
                 <input
                   type="text"
-                  value={link.label}
-                  onChange={(event) =>
-                    updateQuickLink(link.id, (l) => ({ ...l, label: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder="Etiket"
+                  value={contact.value}
+                  onChange={(e) => updateContact(contact.id, e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-white/40 outline-none transition"
                 />
-                <input
-                  type="text"
-                  value={link.href}
-                  onChange={(event) =>
-                    updateQuickLink(link.id, (l) => ({ ...l, href: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder="#section veya URL"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeQuickLink(link.id)}
-                  className="rounded-lg border border-red-200 bg-red-50 text-red-600 p-2 hover:bg-red-100 transition"
-                  aria-label="Sil"
-                >
-                  <Trash2 size={14} />
-                </button>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Kaynak Linkler */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">Kaynaklar</h3>
-            <button
-              type="button"
-              onClick={addResourceLink}
-              className="rounded-xl bg-primary-100 text-primary-700 px-3 py-1.5 text-xs font-semibold hover:bg-primary-200 transition flex items-center gap-1"
-            >
-              <Plus size={14} /> Ekle
-            </button>
-          </div>
-          <div className="grid gap-3 md:grid-cols-2">
-            {draft.resourceLinks.map((link) => (
-              <div key={link.id} className="rounded-xl border border-slate-200 bg-white/70 p-4 flex items-center gap-3">
-                <input
-                  type="text"
-                  value={link.label}
-                  onChange={(event) =>
-                    updateResourceLink(link.id, (l) => ({ ...l, label: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder="Etiket"
-                />
-                <input
-                  type="text"
-                  value={link.href}
-                  onChange={(event) =>
-                    updateResourceLink(link.id, (l) => ({ ...l, href: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder="#section veya URL"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeResourceLink(link.id)}
-                  className="rounded-lg border border-red-200 bg-red-50 text-red-600 p-2 hover:bg-red-100 transition"
-                  aria-label="Sil"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            ))}
-          </div>
+      {/* Quick Links */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+            🔗 Hızlı Erişim Linkleri
+          </h3>
+          <button
+            onClick={addQuickLink}
+            className="flex items-center gap-2 px-3 py-2 text-sm bg-primary-100 text-primary-700 rounded-xl hover:bg-primary-200 transition-colors"
+          >
+            <Plus size={16} />
+            Ekle
+          </button>
         </div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {quickLinks.map((link) => (
+            <div key={link.id} className="flex gap-2 items-center p-3 bg-white rounded-xl border border-slate-200">
+              <input
+                type="text"
+                value={link.label}
+                onChange={(e) => updateQuickLink(link.id, 'label', e.target.value)}
+                className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition text-sm"
+                placeholder="Link adı"
+              />
+              <input
+                type="text"
+                value={link.href}
+                onChange={(e) => updateQuickLink(link.id, 'href', e.target.value)}
+                className="w-28 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition text-sm font-mono"
+                placeholder="#id"
+              />
+              <button
+                onClick={() => deleteQuickLink(link.id)}
+                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
 
-        {/* İletişim Bilgileri */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">İletişim Bilgileri</h3>
-            <button
-              type="button"
-              onClick={addContactItem}
-              className="rounded-xl bg-primary-100 text-primary-700 px-3 py-1.5 text-xs font-semibold hover:bg-primary-200 transition flex items-center gap-1"
-            >
-              <Plus size={14} /> Ekle
-            </button>
-          </div>
-          <div className="space-y-3">
-            {draft.contact.map((item) => (
-              <div key={item.id} className="rounded-xl border border-slate-200 bg-white/70 p-4 flex items-center gap-3">
-                <select
-                  value={item.type}
-                  onChange={(event) =>
-                    updateContactItem(item.id, (c) => ({
-                      ...c,
-                      type: event.target.value as ContactItem['type'],
-                    }))
-                  }
-                  className="rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100 bg-white"
-                >
-                  {contactTypeOptions.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  value={item.value}
-                  onChange={(event) =>
-                    updateContactItem(item.id, (c) => ({ ...c, value: event.target.value }))
-                  }
-                  className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary-100"
-                  placeholder={
-                    item.type === 'address'
-                      ? 'Adres girin...'
-                      : item.type === 'phone'
-                      ? '+90 XXX XXX XX XX'
-                      : 'email@example.com'
-                  }
-                />
-                <button
-                  type="button"
-                  onClick={() => removeContactItem(item.id)}
-                  className="rounded-lg border border-red-200 bg-red-50 text-red-600 p-2 hover:bg-red-100 transition"
-                  aria-label="Sil"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            ))}
-          </div>
+      {/* Resource Links */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+            📚 Kaynak Linkleri
+          </h3>
+          <button
+            onClick={addResourceLink}
+            className="flex items-center gap-2 px-3 py-2 text-sm bg-primary-100 text-primary-700 rounded-xl hover:bg-primary-200 transition-colors"
+          >
+            <Plus size={16} />
+            Ekle
+          </button>
         </div>
-      </form>
-    </SectionContainer>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {resourceLinks.map((link) => (
+            <div key={link.id} className="flex gap-2 items-center p-3 bg-white rounded-xl border border-slate-200">
+              <input
+                type="text"
+                value={link.label}
+                onChange={(e) => updateResourceLink(link.id, 'label', e.target.value)}
+                className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition text-sm"
+                placeholder="Link adı"
+              />
+              <input
+                type="text"
+                value={link.href}
+                onChange={(e) => updateResourceLink(link.id, 'href', e.target.value)}
+                className="w-28 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition text-sm font-mono"
+                placeholder="#id"
+              />
+              <button
+                onClick={() => deleteResourceLink(link.id)}
+                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Copyright */}
+      <div className="space-y-4 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+        <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+          ©️ Telif Hakkı Metni
+        </h3>
+        <input
+          type="text"
+          value={copyright}
+          onChange={(e) => setCopyright(e.target.value)}
+          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+        />
+      </div>
+
+      {/* Save Button */}
+      <div className="flex justify-end pt-6 border-t border-slate-200">
+        <button
+          onClick={handleSave}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${saved
+              ? 'bg-emerald-500 text-white'
+              : 'bg-gradient-to-r from-primary-500 to-blue-500 text-white hover:shadow-lg'
+            }`}
+        >
+          <Save size={18} />
+          {saved ? 'Kaydedildi!' : 'Değişiklikleri Kaydet'}
+        </button>
+      </div>
+    </div>
   );
 };

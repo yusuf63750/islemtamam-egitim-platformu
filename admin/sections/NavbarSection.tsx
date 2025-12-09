@@ -1,229 +1,261 @@
-import React, { useId } from 'react';
-import { SectionContainer } from '../components/SectionContainer';
-import { useEditableSection } from '../hooks/useEditableSection';
-import { NavbarLink } from '../../types';
-import { Plus, Trash2 } from 'lucide-react';
-import { FileUploader } from '../components/FileUploader';
+import React, { useState } from 'react';
+import { Navigation, Save, Plus, Trash2, Phone, Mail, MapPin, Clock } from 'lucide-react';
 
-const generateId = (prefix: string) => {
-  const randomPart = typeof globalThis.crypto?.randomUUID === 'function'
-    ? globalThis.crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
-  return `${prefix}-${randomPart}`;
-};
+interface NavLink {
+  id: string;
+  label: string;
+  href: string;
+}
 
-const createLink = (): NavbarLink => ({
-  id: generateId('link'),
-  label: 'Yeni Link',
-  href: '#',
-});
+interface TopBarInfo {
+  phone: string;
+  email: string;
+  address: string;
+  workingHours: string;
+}
+
+const initialLinks: NavLink[] = [
+  { id: '1', label: 'Ana Sayfa', href: '#hero' },
+  { id: '2', label: 'Neler Var', href: '#neler-var' },
+  { id: '3', label: 'Çözümler', href: '#cozumler' },
+  { id: '4', label: 'Paketler', href: '#paketler' },
+  { id: '5', label: 'Kadromuz', href: '#kadro' },
+  { id: '6', label: 'Yorumlar', href: '#yorumlar' },
+  { id: '7', label: 'SSS', href: '#sss' },
+  { id: '8', label: 'Blog', href: '#blog' },
+];
 
 export const NavbarSection: React.FC = () => {
-  const formId = useId();
-  const { draft, setDraft, save, resetToCurrent, loadDefaults, isDirty } = useEditableSection('navbar');
+  const [logoText, setLogoText] = useState('İŞLEM TAMAM');
+  const [tagline, setTagline] = useState('Eğitim Platformu');
+  const [ctaLabel, setCtaLabel] = useState('ÜCRETSİZ DENE');
+  const [ctaHref, setCtaHref] = useState('#basvuru');
+  const [links, setLinks] = useState<NavLink[]>(initialLinks);
+  const [topBar, setTopBar] = useState<TopBarInfo>({
+    phone: '+90 (532) 123 45 67',
+    email: 'info@islemtamam.com',
+    address: 'İstanbul, Türkiye',
+    workingHours: 'Hafta içi 09:00 - 18:00',
+  });
+  const [saved, setSaved] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    save();
+  const handleSave = () => {
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
   };
 
   const addLink = () => {
-    setDraft((prev) => ({ ...prev, links: [...prev.links, createLink()] }));
+    const newId = String(Date.now());
+    setLinks([...links, { id: newId, label: 'Yeni Link', href: '#' }]);
   };
 
-  const updateLink = (id: string, updater: (link: NavbarLink) => NavbarLink) => {
-    setDraft((prev) => ({
-      ...prev,
-      links: prev.links.map((link) => (link.id === id ? updater(link) : link)),
-    }));
+  const deleteLink = (id: string) => {
+    if (links.length > 1) {
+      setLinks(links.filter(l => l.id !== id));
+    }
   };
 
-  const removeLink = (id: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      links: prev.links.filter((link) => link.id !== id),
-    }));
+  const updateLink = (id: string, field: keyof NavLink, value: string) => {
+    setLinks(links.map(l => l.id === id ? { ...l, [field]: value } : l));
   };
 
-  const moveLink = (index: number, direction: 'up' | 'down') => {
-    setDraft((prev) => {
-      const links = [...prev.links];
-      const newIndex = direction === 'up' ? index - 1 : index + 1;
-      if (newIndex < 0 || newIndex >= links.length) return prev;
-      [links[index], links[newIndex]] = [links[newIndex], links[index]];
-      return { ...prev, links };
-    });
+  const updateTopBar = (field: keyof TopBarInfo, value: string) => {
+    setTopBar({ ...topBar, [field]: value });
   };
 
   return (
-    <SectionContainer
-      title="Navigation"
-      description="Menü linkleri ve üst bilgilendirme alanını düzenleyin."
-      actions={
-        <div className="flex flex-wrap gap-2">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center gap-3 pb-6 border-b border-slate-200">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+          <Navigation className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-slate-900">Navbar & TopBar</h2>
+          <p className="text-slate-500">Menü, logo ve iletişim bilgilerini düzenleyin</p>
+        </div>
+      </div>
+
+      {/* Logo Settings */}
+      <div className="space-y-4 p-6 bg-slate-50 rounded-2xl border border-slate-200">
+        <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+          🏷️ Logo Ayarları
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Logo Metni</label>
+            <input
+              type="text"
+              value={logoText}
+              onChange={(e) => setLogoText(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Alt Yazı (Tagline)</label>
+            <input
+              type="text"
+              value={tagline}
+              onChange={(e) => setTagline(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+            />
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-xl border border-slate-200">
+          <p className="text-xs text-slate-500 mb-2">Önizleme:</p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold">İT</div>
+            <div>
+              <div className="font-bold text-slate-900">{logoText}</div>
+              <div className="text-xs text-slate-500">{tagline}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Button */}
+      <div className="space-y-4 p-6 bg-primary-50 rounded-2xl border border-primary-100">
+        <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+          🚀 CTA Butonu
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Buton Metni</label>
+            <input
+              type="text"
+              value={ctaLabel}
+              onChange={(e) => setCtaLabel(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Buton Linki</label>
+            <input
+              type="text"
+              value={ctaHref}
+              onChange={(e) => setCtaHref(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Top Bar Info */}
+      <div className="space-y-4 p-6 bg-slate-900 rounded-2xl text-white">
+        <h3 className="font-semibold flex items-center gap-2">
+          📞 TopBar İletişim Bilgileri
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-300 mb-2">
+              <Phone size={14} />
+              Telefon
+            </label>
+            <input
+              type="text"
+              value={topBar.phone}
+              onChange={(e) => updateTopBar('phone', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-white/40 outline-none transition"
+            />
+          </div>
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-300 mb-2">
+              <Mail size={14} />
+              E-posta
+            </label>
+            <input
+              type="text"
+              value={topBar.email}
+              onChange={(e) => updateTopBar('email', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-white/40 outline-none transition"
+            />
+          </div>
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-300 mb-2">
+              <MapPin size={14} />
+              Adres
+            </label>
+            <input
+              type="text"
+              value={topBar.address}
+              onChange={(e) => updateTopBar('address', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-white/40 outline-none transition"
+            />
+          </div>
+          <div>
+            <label className="flex items-center gap-2 text-sm font-medium text-slate-300 mb-2">
+              <Clock size={14} />
+              Çalışma Saatleri
+            </label>
+            <input
+              type="text"
+              value={topBar.workingHours}
+              onChange={(e) => updateTopBar('workingHours', e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:border-white/40 outline-none transition"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Menu Links */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+            🔗 Menü Linkleri ({links.length})
+          </h3>
           <button
-            type="button"
             onClick={addLink}
-            className="rounded-xl bg-primary-100 text-primary-700 px-4 py-2 text-xs font-semibold hover:bg-primary-200 transition flex items-center gap-1"
+            className="flex items-center gap-2 px-3 py-2 text-sm bg-primary-100 text-primary-700 rounded-xl hover:bg-primary-200 transition-colors"
           >
-            <Plus size={14} /> Yeni Link
-          </button>
-          <button
-            type="button"
-            onClick={loadDefaults}
-            className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
-          >
-            Varsayılanları Yükle
-          </button>
-          <button
-            type="button"
-            onClick={resetToCurrent}
-            disabled={!isDirty}
-            className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Değişiklikleri Geri Al
-          </button>
-          <button
-            type="submit"
-            form={formId}
-            disabled={!isDirty}
-            className="rounded-xl bg-primary-600 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Kaydet
+            <Plus size={16} />
+            Link Ekle
           </button>
         </div>
-      }
-    >
-      <form id={formId} className="space-y-8" onSubmit={handleSubmit}>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">Logo Metni</label>
-            <input
-              type="text"
-              value={draft.logoText}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, logoText: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">Slogan</label>
-            <input
-              type="text"
-              value={draft.tagline}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, tagline: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">CTA Butonu Metni</label>
-            <input
-              type="text"
-              value={draft.ctaLabel}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, ctaLabel: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-            />
-          </div>
-          <div className="space-y-3">
-            <label className="text-sm font-semibold text-slate-700">CTA Butonu Hedefi</label>
-            <input
-              type="text"
-              value={draft.ctaHref}
-              onChange={(event) =>
-                setDraft((prev) => ({ ...prev, ctaHref: event.target.value }))
-              }
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-              placeholder="https://..."
-            />
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-slate-700">Menü Linkleri</h3>
-          {draft.links.map((link, index) => (
-            <div key={link.id} className="rounded-2xl border border-slate-200 bg-white/70 p-5 shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="flex flex-col gap-0.5">
-                  <button
-                    type="button"
-                    onClick={() => moveLink(index, 'up')}
-                    disabled={index === 0}
-                    className="text-slate-400 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed p-0.5"
-                    aria-label="Yukarı taşı"
-                  >
-                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                      <path d="M6 0L12 8H0L6 0Z" fill="currentColor" />
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => moveLink(index, 'down')}
-                    disabled={index === draft.links.length - 1}
-                    className="text-slate-400 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed p-0.5"
-                    aria-label="Aşağı taşı"
-                  >
-                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                      <path d="M6 8L0 0H12L6 8Z" fill="currentColor" />
-                    </svg>
-                  </button>
-                </div>
-                <span className="text-xs text-slate-400 font-medium">#{index + 1}</span>
-                <span className="font-semibold text-slate-800 flex-1">{link.label}</span>
-                <button
-                  type="button"
-                  onClick={() => removeLink(link.id)}
-                  className="rounded-xl border border-red-200 bg-red-50 text-red-600 p-2 hover:bg-red-100 transition"
-                  aria-label="Linki sil"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-600">Etiket</label>
-                  <input
-                    type="text"
-                    value={link.label}
-                    onChange={(event) =>
-                      updateLink(link.id, (l) => ({ ...l, label: event.target.value }))
-                    }
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-600">Hedef</label>
-                  <input
-                    type="text"
-                    value={link.href}
-                    onChange={(event) =>
-                      updateLink(link.id, (l) => ({ ...l, href: event.target.value }))
-                    }
-                    className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-                    placeholder="/sayfa veya https://..."
-                  />
-                  <p className="text-[10px] text-slate-400 mt-1">
-                    Site içi sayfalar için "/" ile başlayın (örn: /paketler). Dış linkler için https:// kullanın.
-                  </p>
-                </div>
-              </div>
+        <div className="space-y-3">
+          {links.map((link, index) => (
+            <div key={link.id} className="flex gap-4 items-center p-4 bg-white rounded-xl border border-slate-200">
+              <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-sm font-bold text-slate-500">
+                {index + 1}
+              </span>
+              <input
+                type="text"
+                value={link.label}
+                onChange={(e) => updateLink(link.id, 'label', e.target.value)}
+                className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition"
+                placeholder="Link adı"
+              />
+              <input
+                type="text"
+                value={link.href}
+                onChange={(e) => updateLink(link.id, 'href', e.target.value)}
+                className="flex-1 px-3 py-2 rounded-lg border border-slate-200 focus:border-primary-500 outline-none transition font-mono text-sm"
+                placeholder="#section-id"
+              />
+              <button
+                onClick={() => deleteLink(link.id)}
+                className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                disabled={links.length <= 1}
+              >
+                <Trash2 size={18} />
+              </button>
             </div>
           ))}
-
-          {draft.links.length === 0 && (
-            <p className="text-sm text-slate-500 border border-dashed border-slate-200 rounded-2xl px-6 py-10 text-center">
-              Henüz menü linki bulunmuyor. "Yeni Link" butonunu kullanarak ekleyin.
-            </p>
-          )}
         </div>
-      </form>
-    </SectionContainer>
+      </div>
+
+      {/* Save Button */}
+      <div className="flex justify-end pt-6 border-t border-slate-200">
+        <button
+          onClick={handleSave}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${saved
+              ? 'bg-emerald-500 text-white'
+              : 'bg-gradient-to-r from-primary-500 to-blue-500 text-white hover:shadow-lg'
+            }`}
+        >
+          <Save size={18} />
+          {saved ? 'Kaydedildi!' : 'Değişiklikleri Kaydet'}
+        </button>
+      </div>
+    </div>
   );
 };

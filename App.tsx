@@ -8,6 +8,7 @@ import { StatsBanner } from './components/StatsBanner';
 import { Solutions } from './components/Solutions';
 import { Packages } from './components/Packages';
 import { Testimonials } from './components/Testimonials';
+import { Kadromuz } from './components/Kadromuz';
 import { FAQ } from './components/FAQ';
 import { BlogSection } from './components/BlogSection';
 import { BlogList, BlogPost } from './components/BlogPage';
@@ -42,6 +43,9 @@ const LandingPage: React.FC = () => {
 
         {/* Paketlerimiz */}
         <div id="paketler"><Packages /></div>
+
+        {/* Kadromuz */}
+        <div id="kadro"><Kadromuz /></div>
 
         {/* Yorumlar */}
         <div id="yorumlar"><Testimonials /></div>

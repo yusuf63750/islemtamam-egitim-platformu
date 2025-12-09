@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, TouchEvent } from 'react';
 import { Button } from './Button';
 import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, BookOpen, Users, Laptop, Sparkles, Rocket, Star } from 'lucide-react';
 import { useSiteContent } from '../context/SiteContentContext';
@@ -18,7 +18,7 @@ const slides = [
     buttonHref: '#basvuru',
     bgGradient: 'from-blue-600/80 via-blue-500/80 to-cyan-400/80',
     emoji: '🎓',
-    bgImage: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&h=1080&fit=crop', // Çocuklar sınıfta
+    bgImage: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&h=1080&fit=crop',
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ const slides = [
     buttonHref: '#paketler',
     bgGradient: 'from-emerald-600/80 via-teal-500/80 to-cyan-400/80',
     emoji: '🚀',
-    bgImage: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop', // Öğrenciler bilgisayar başında
+    bgImage: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&h=1080&fit=crop',
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const slides = [
     buttonHref: '#paketler',
     bgGradient: 'from-purple-600/80 via-violet-500/80 to-pink-400/80',
     emoji: '⭐',
-    bgImage: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&h=1080&fit=crop', // Mutlu öğrenciler
+    bgImage: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&h=1080&fit=crop',
   },
 ];
 
@@ -62,6 +62,11 @@ export const Hero: React.FC = () => {
   const hero = content.hero;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Touch/Swipe handling
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -89,14 +94,46 @@ export const Hero: React.FC = () => {
     setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
+  // Touch event handlers for swipe
+  const handleTouchStart = (e: TouchEvent<HTMLElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: TouchEvent<HTMLElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const swipeDistance = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Swipe left -> next slide
+        nextSlide();
+      } else {
+        // Swipe right -> prev slide
+        prevSlide();
+      }
+    }
+
+    // Reset
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   return (
-    <section className="relative min-h-[650px] md:min-h-[1000px] overflow-hidden pt-28 md:pt-32">
-      {/* Floating Fun Emojis */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+    <section
+      className="relative min-h-[90vh] sm:min-h-[650px] md:min-h-[1000px] overflow-hidden pt-20 sm:pt-28 md:pt-32"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Floating Fun Emojis - Mobilde gizle */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-20 hidden sm:block">
         {floatingEmojis.map((emoji, i) => (
           <div
             key={i}
-            className="absolute text-4xl md:text-5xl opacity-20 animate-float"
+            className="absolute text-3xl sm:text-4xl md:text-5xl opacity-15 sm:opacity-20 animate-float"
             style={{
               left: `${10 + (i * 12)}%`,
               top: `${15 + (i % 3) * 25}%`,
@@ -121,18 +158,18 @@ export const Hero: React.FC = () => {
             <img
               src={slide.bgImage}
               alt={slide.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
             />
           </div>
 
           {/* Gradient Overlay */}
           <div className={`absolute inset-0 bg-gradient-to-br ${slide.bgGradient}`}></div>
 
-          {/* Dark Overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/40 sm:bg-black/30"></div>
 
           {/* Animated Pattern Overlay */}
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-10 hidden sm:block">
             <div className="absolute inset-0" style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
               backgroundSize: '60px 60px',
@@ -143,110 +180,122 @@ export const Hero: React.FC = () => {
           {/* Floating Shapes */}
           <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-float hidden lg:block"></div>
           <div className="absolute bottom-20 right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl animate-float animation-delay-2000 hidden lg:block"></div>
-          <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-white/5 rounded-full blur-lg animate-float animation-delay-4000 hidden lg:block"></div>
 
           {/* Content */}
           <div className="relative z-10 h-full flex items-center">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+              <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
                 {/* Text Content */}
                 <div className={`transform transition-all duration-700 delay-200 ${index === currentSlide ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                   {/* Fun Badge */}
-                  <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-semibold mb-6 animate-bounce-slow">
-                    <span className="text-2xl">{slide.emoji}</span>
-                    <Sparkles className="w-4 h-4" />
-                    Yeni Dönem Başlıyor!
+                  <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-semibold mb-4 sm:mb-6 animate-bounce-slow">
+                    <span className="text-lg sm:text-2xl">{slide.emoji}</span>
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="hidden xs:inline">Yeni Dönem Başlıyor!</span>
+                    <span className="xs:hidden">Yeni Dönem!</span>
                   </div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-lg leading-tight">
+                  {/* Title */}
+                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-3 sm:mb-6 drop-shadow-lg leading-tight">
                     {slide.title}
                   </h1>
-                  <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">
+
+                  {/* Description */}
+                  <p className="text-sm sm:text-lg md:text-xl text-white/90 mb-4 sm:mb-8 leading-relaxed line-clamp-3 sm:line-clamp-none">
                     {slide.description}
                   </p>
 
                   {/* Features List */}
-                  <ul className="space-y-3 mb-8">
-                    {slide.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-white/90">
-                        <CheckCircle className="w-5 h-5 text-white shrink-0 mt-0.5" />
-                        <span className="text-sm md:text-base">{feature}</span>
+                  <ul className="space-y-2 sm:space-y-3 mb-4 sm:mb-8">
+                    {slide.features.slice(0, 2).map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 sm:gap-3 text-white/90">
+                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm md:text-base">{feature}</span>
                       </li>
                     ))}
+                    {/* Show more on larger screens */}
+                    <div className="hidden sm:block">
+                      {slide.features.slice(2).map((feature, idx) => (
+                        <li key={idx + 2} className="flex items-start gap-2 sm:gap-3 text-white/90 mt-3">
+                          <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 mt-0.5" />
+                          <span className="text-xs sm:text-sm md:text-base">{feature}</span>
+                        </li>
+                      ))}
+                    </div>
                   </ul>
 
-                  {/* CTA Button */}
-                  <div className="flex flex-wrap gap-4">
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <Button
                       variant="white"
                       size="lg"
-                      className="gap-2 shadow-2xl hover:scale-105 transition-transform font-bold"
+                      className="gap-2 shadow-2xl hover:scale-105 transition-transform font-bold text-sm sm:text-base py-3 sm:py-4"
                       onClick={() => window.location.href = slide.buttonHref}
                     >
-                      <Rocket className="w-5 h-5" />
+                      <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
                       {slide.buttonText}
                     </Button>
                     <Button
                       variant="secondary"
                       size="lg"
-                      className="gap-2 shadow-xl hover:scale-105 transition-transform bg-white/20 border-white/30 text-white hover:bg-white/30"
+                      className="gap-2 shadow-xl hover:scale-105 transition-transform bg-white/20 border-white/30 text-white hover:bg-white/30 text-sm sm:text-base py-3 sm:py-4"
                       onClick={() => window.location.href = '#neler-var'}
                     >
-                      Keşfet <ArrowRight size={20} />
+                      Keşfet <ArrowRight size={18} className="sm:w-5 sm:h-5" />
                     </Button>
                   </div>
                 </div>
 
-                {/* Fun Illustration Side */}
+                {/* Fun Illustration Side - Only on lg+ */}
                 <div className={`hidden lg:block transform transition-all duration-700 delay-400 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
                   <div className="relative">
                     {/* Main Card */}
-                    <div className="bg-white/15 backdrop-blur-md rounded-3xl p-8 border border-white/20">
-                      <div className="text-center mb-6">
-                        <div className="text-8xl mb-4 animate-bounce-slow">{slide.emoji}</div>
+                    <div className="bg-white/15 backdrop-blur-md rounded-3xl p-6 xl:p-8 border border-white/20">
+                      <div className="text-center mb-4 xl:mb-6">
+                        <div className="text-6xl xl:text-8xl mb-4 animate-bounce-slow">{slide.emoji}</div>
                         <div className="flex justify-center gap-1">
                           {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+                            <Star key={i} className="w-5 h-5 xl:w-6 xl:h-6 text-yellow-400 fill-yellow-400" />
                           ))}
                         </div>
                       </div>
 
-                      <div className="grid gap-4">
-                        <div className="bg-white/20 rounded-xl p-4 flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <BookOpen className="w-6 h-6 text-white" />
+                      <div className="grid gap-3 xl:gap-4">
+                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
+                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
+                            <BookOpen className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
                           </div>
                           <div>
-                            <div className="text-white font-bold">Akıllı Öğrenme</div>
-                            <div className="text-white/70 text-sm">7 Farklı Modül</div>
+                            <div className="text-white font-bold text-sm xl:text-base">Akıllı Öğrenme</div>
+                            <div className="text-white/70 text-xs xl:text-sm">7 Farklı Modül</div>
                           </div>
                         </div>
-                        <div className="bg-white/20 rounded-xl p-4 flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <Users className="w-6 h-6 text-white" />
+                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
+                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
+                            <Users className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
                           </div>
                           <div>
-                            <div className="text-white font-bold">8500+ Öğrenci</div>
-                            <div className="text-white/70 text-sm">Mutlu aile</div>
+                            <div className="text-white font-bold text-sm xl:text-base">8500+ Öğrenci</div>
+                            <div className="text-white/70 text-xs xl:text-sm">Mutlu aile</div>
                           </div>
                         </div>
-                        <div className="bg-white/20 rounded-xl p-4 flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <Laptop className="w-6 h-6 text-white" />
+                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
+                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
+                            <Laptop className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
                           </div>
                           <div>
-                            <div className="text-white font-bold">7/24 Erişim</div>
-                            <div className="text-white/70 text-sm">Her yerden öğren</div>
+                            <div className="text-white font-bold text-sm xl:text-base">7/24 Erişim</div>
+                            <div className="text-white/70 text-xs xl:text-sm">Her yerden öğren</div>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Floating Mini Cards */}
-                    <div className="absolute -top-4 -right-4 bg-yellow-400 text-yellow-900 px-4 py-2 rounded-xl font-bold text-sm animate-wiggle shadow-lg">
+                    <div className="absolute -top-4 -right-4 bg-yellow-400 text-yellow-900 px-3 xl:px-4 py-1.5 xl:py-2 rounded-xl font-bold text-xs xl:text-sm animate-wiggle shadow-lg">
                       🎉 %100 MEB Uyumlu
                     </div>
-                    <div className="absolute -bottom-4 -left-4 bg-emerald-400 text-emerald-900 px-4 py-2 rounded-xl font-bold text-sm animate-bounce-slow shadow-lg">
+                    <div className="absolute -bottom-4 -left-4 bg-emerald-400 text-emerald-900 px-3 xl:px-4 py-1.5 xl:py-2 rounded-xl font-bold text-xs xl:text-sm animate-bounce-slow shadow-lg">
                       🏆 15+ Yıl Deneyim
                     </div>
                   </div>
@@ -257,33 +306,60 @@ export const Hero: React.FC = () => {
         </div>
       ))}
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - SADECE MASAÜSTÜNDE (sm ve üstü) */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all duration-300 text-white"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all duration-300 text-white hidden sm:block"
         aria-label="Önceki"
       >
         <ChevronLeft size={24} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all duration-300 text-white"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition-all duration-300 text-white hidden sm:block"
         aria-label="Sonraki"
       >
         <ChevronRight size={24} />
       </button>
 
+      {/* Swipe hint - Sadece mobilde ilk görünümde */}
+      <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 sm:hidden">
+        <div className="flex items-center gap-2 text-white/60 text-xs animate-pulse">
+          <span>←</span>
+          <span>Kaydır</span>
+          <span>→</span>
+        </div>
+      </div>
+
       {/* Dots */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/70'
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white w-6 sm:w-8' : 'bg-white/50 hover:bg-white/70'
               }`}
             aria-label={`Slide ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* Mobile Quick Stats */}
+      <div className="absolute bottom-16 left-0 right-0 z-20 px-4 sm:hidden">
+        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 flex justify-around text-center">
+          <div>
+            <div className="text-white font-bold text-lg">7</div>
+            <div className="text-white/70 text-xs">Modül</div>
+          </div>
+          <div className="border-l border-white/20 pl-4">
+            <div className="text-white font-bold text-lg">8500+</div>
+            <div className="text-white/70 text-xs">Öğrenci</div>
+          </div>
+          <div className="border-l border-white/20 pl-4">
+            <div className="text-white font-bold text-lg">7/24</div>
+            <div className="text-white/70 text-xs">Erişim</div>
+          </div>
+        </div>
       </div>
     </section>
   );

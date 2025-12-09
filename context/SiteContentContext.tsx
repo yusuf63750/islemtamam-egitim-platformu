@@ -19,6 +19,7 @@ const defaultContent: SiteContent = {
       { id: 'nav-about', label: 'Hakkımızda', href: '#akilli-ogrenme' },
       { id: 'nav-solutions', label: 'Çözümlerimiz', href: '#cozumler' },
       { id: 'nav-packages', label: 'Paketlerimiz', href: '#paketler' },
+      { id: 'nav-team', label: 'Kadromuz', href: '#kadro' },
       { id: 'nav-testimonials', label: 'Yorumlar', href: '#yorumlar' },
       { id: 'nav-faq', label: 'SSS', href: '#sss' },
     ],

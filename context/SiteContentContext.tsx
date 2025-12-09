@@ -12,15 +12,15 @@ const STORAGE_KEY = 'islemtamam-site-content';
 const defaultContent: SiteContent = {
   navbar: {
     logoText: 'İŞLEM TAMAM',
-    tagline: 'ONLINE DERS SİSTEMİ | LGS',
-    ctaLabel: 'Kayıt Ol',
-    ctaHref: '/paketler',
+    tagline: 'ONLINE EĞİTİM PLATFORMU',
+    ctaLabel: 'Ücretsiz Dene',
+    ctaHref: '#paketler',
     links: [
-      { id: 'nav-packages', label: 'Eğitim Paketleri', href: '/paketler' },
-      { id: 'nav-staff', label: 'Kadromuz', href: '/kadro' },
-      { id: 'nav-success', label: 'Başarılar', href: '/basarilar' },
-      { id: 'nav-testimonials', label: 'Yorumlar', href: '/yorumlar' },
-      { id: 'nav-faq', label: 'SSS', href: '/sss' },
+      { id: 'nav-about', label: 'Hakkımızda', href: '#akilli-ogrenme' },
+      { id: 'nav-solutions', label: 'Çözümlerimiz', href: '#cozumler' },
+      { id: 'nav-packages', label: 'Paketlerimiz', href: '#paketler' },
+      { id: 'nav-testimonials', label: 'Yorumlar', href: '#yorumlar' },
+      { id: 'nav-faq', label: 'SSS', href: '#sss' },
     ],
   },
   hero: {
@@ -35,8 +35,8 @@ const defaultContent: SiteContent = {
     videoUrl: 'https://www.youtube.com/embed/2cFL-5vHc9s',
     stats: ['15+ Yıl LGS Tecrübesi', '%95 Başarı Oranı'],
     heroImageUrl:
-      'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80',
-    heroImageAlt: 'Mutlu öğrenciler',
+      '/fun_kids_learning_hero_1765315722231.png', // Updated to new generated image
+    heroImageAlt: 'Mutlu öğrenciler eğitimde',
     badgeInfo: {
       badgeTitle: '8500+ Öğrenci',
       badgeSubtitle: "LGS başarısı için bize güveniyor",
@@ -58,7 +58,7 @@ const defaultContent: SiteContent = {
       {
         id: 'feature-expert-team',
         icon: 'users',
-        color: 'bg-blue-500',
+        color: 'bg-vivid-purple',
         title: '10 Kişilik LGS Uzman Kadro',
         description:
           'Her ders için LGS müfredatına hakim, sorulara cevap verebilen uzman öğretmenlerden oluşan ekip.',
@@ -66,14 +66,14 @@ const defaultContent: SiteContent = {
       {
         id: 'feature-live-classes',
         icon: 'video',
-        color: 'bg-orange-500',
+        color: 'bg-vivid-orange',
         title: 'Canlı LGS Dersleri & Kayıtlar',
         description: 'İster canlı katıl, LGS konularını anla; istersen kaçırdığın dersleri sınırsız tekrar et.',
       },
       {
         id: 'feature-library',
         icon: 'bookOpen',
-        color: 'bg-green-500',
+        color: 'bg-vivid-green',
         title: 'LGS Soru Bankası ve Deneme',
         description:
           'Binlerce çıkmış LGS sorusu, çözümlü deneme sınavları ve konu kütüphanesine 7/24 erişim.',
@@ -81,7 +81,7 @@ const defaultContent: SiteContent = {
       {
         id: 'feature-coach',
         icon: 'target',
-        color: 'bg-purple-500',
+        color: 'bg-vivid-pink',
         title: 'Kişiye Özel LGS Koçluğu',
         description:
           'Zayıf branşlarında birebir destek, hedef puan belirleme ve motivasyon rehberliği.',
@@ -89,7 +89,7 @@ const defaultContent: SiteContent = {
       {
         id: 'feature-support',
         icon: 'messageCircle',
-        color: 'bg-pink-500',
+        color: 'bg-primary-500',
         title: 'LGS Soru Çözüm Sistemleri',
         description:
           'Yapamadığın LGS sorularını gönder, öğretmenlerimiz video ile anında çözüme kavuştur.',
@@ -97,7 +97,7 @@ const defaultContent: SiteContent = {
       {
         id: 'feature-focus',
         icon: 'clock',
-        color: 'bg-indigo-500',
+        color: 'bg-vivid-yellow',
         title: 'Sınav Öncesi Yoğunlaşma',
         description:
           "LGS'ye 4-6 hafta kala son düşüş, eksiklikleri kapatma ve full tekrar kampları.",

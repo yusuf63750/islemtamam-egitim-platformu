@@ -3,7 +3,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { useSiteContent } from '../context/SiteContentContext';
 import { TopBar } from './TopBar';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,14 +22,20 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const handleNavigation = (href: string) => {
+    setIsMobileMenuOpen(false);
     if (href.startsWith('#')) {
-      // If it's a hash link, we might need to navigate to home first if not already there
-      if (location.pathname !== '/') {
-        navigate('/' + href);
+      const elementId = href.substring(1);
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       } else {
-        const target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
+        // If element not found (maybe we are on admin page), go to home then scroll
+        if (location.pathname !== '/') {
+          navigate('/');
+          setTimeout(() => {
+            const el = document.getElementById(elementId);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         }
       }
     } else {
@@ -39,7 +45,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-      {/* Top Bar - Always visible but maybe hide on scroll if desired, for now keeping it simple */}
+      {/* Top Bar */}
       <div className={`transition-all duration-300 ${isScrolled ? 'h-0 overflow-hidden opacity-0' : 'h-auto opacity-100'}`}>
         <TopBar />
       </div>
@@ -48,7 +54,7 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => handleNavigation('#hero')}>
               <img src="/LOGO.png" alt="İşlemTamam Logo" className="w-12 h-12 object-contain" />
               <div className="flex flex-col leading-tight">
                 <span className="text-lg font-bold tracking-tight uppercase text-slate-900">
@@ -58,18 +64,18 @@ export const Navbar: React.FC = () => {
                   {navbar.tagline}
                 </span>
               </div>
-            </Link>
+            </div>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {navbar.links.map((link) => (
-                <Link
+                <button
                   key={link.id}
-                  to={link.href}
+                  onClick={() => handleNavigation(link.href)}
                   className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
                 >
                   {link.label}
-                </Link>
+                </button>
               ))}
               <Button
                 variant="primary"
@@ -96,22 +102,18 @@ export const Navbar: React.FC = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-slate-100 shadow-xl p-4 flex flex-col gap-4">
             {navbar.links.map((link) => (
-              <Link
+              <button
                 key={link.id}
-                to={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-base font-medium text-slate-600 hover:text-primary-600 py-2 border-b border-slate-50"
+                onClick={() => handleNavigation(link.href)}
+                className="text-left text-base font-medium text-slate-600 hover:text-primary-600 py-2 border-b border-slate-50"
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
             <Button
               variant="primary"
               className="w-full"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                handleNavigation(navbar.ctaHref);
-              }}
+              onClick={() => handleNavigation(navbar.ctaHref)}
             >
               {navbar.ctaLabel}
             </Button>

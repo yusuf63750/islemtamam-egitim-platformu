@@ -207,8 +207,11 @@ export const NavbarSection: React.FC = () => {
                       updateLink(link.id, (l) => ({ ...l, href: event.target.value }))
                     }
                     className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-primary-100 focus:border-primary-400 transition"
-                    placeholder="#section veya https://..."
+                    placeholder="/sayfa veya https://..."
                   />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Site içi sayfalar için "/" ile başlayın (örn: /paketler). Dış linkler için https:// kullanın.
+                  </p>
                 </div>
               </div>
             </div>

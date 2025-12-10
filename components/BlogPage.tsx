@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, ArrowLeft, Clock, User, Share2, ThumbsUp, MessageCircle } from 'lucide-react';
+import { Calendar, ArrowLeft, Clock, User } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -181,7 +181,7 @@ export const BlogPost: React.FC = () => {
             <SocialFloatingButtons />
 
             {/* Hero Image */}
-            <div className="pt-24">
+            <div className="pt-32">
                 <div className="relative h-64 md:h-96">
                     <img
                         src={post.image}
@@ -230,24 +230,6 @@ export const BlogPost: React.FC = () => {
                     className="prose prose-lg max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-a:text-primary-600"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
-
-                {/* Share & Like */}
-                <div className="mt-12 pt-8 border-t border-slate-200 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-700 transition-colors">
-                            <ThumbsUp size={18} />
-                            Beğen
-                        </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-700 transition-colors">
-                            <MessageCircle size={18} />
-                            Yorum Yap
-                        </button>
-                    </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-primary-100 hover:bg-primary-200 rounded-full text-primary-700 transition-colors">
-                        <Share2 size={18} />
-                        Paylaş
-                    </button>
-                </div>
             </div>
 
             <Footer />

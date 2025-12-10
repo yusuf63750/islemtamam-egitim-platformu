@@ -120,7 +120,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section
-      className="relative min-h-[90vh] sm:min-h-[650px] md:min-h-[1000px] overflow-hidden pt-20 sm:pt-28 md:pt-32"
+      className="relative min-h-[90vh] sm:min-h-[650px] md:min-h-[850px] overflow-hidden pt-20 sm:pt-28 md:pt-32"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
 
           {/* Content */}
           <div className="relative z-10 h-full flex items-center">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:pt-32 sm:pb-12">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Text Content */}
                 <div className={`transform transition-all duration-700 delay-200 ${index === currentSlide ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>

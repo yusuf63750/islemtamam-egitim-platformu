@@ -5,8 +5,7 @@ import {
     Building,
     Video,
     FileText,
-    Tv,
-    ArrowRight
+    Tv
 } from 'lucide-react';
 
 const solutions = [
@@ -117,14 +116,9 @@ export const Solutions: React.FC = () => {
                                 </h3>
 
                                 {/* Description */}
-                                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                                <p className="text-slate-600 text-sm leading-relaxed">
                                     {solution.description}
                                 </p>
-
-                                {/* Arrow */}
-                                <div className={`flex items-center gap-2 ${solution.textColor} font-semibold text-sm`}>
-                                    İncele <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                </div>
                             </a>
                         );
                     })}

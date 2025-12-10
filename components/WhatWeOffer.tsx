@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Users, Building2, ArrowRight } from 'lucide-react';
+import { Globe, Users, Building2 } from 'lucide-react';
 
 const offerings = [
     {
@@ -95,14 +95,6 @@ export const WhatWeOffer: React.FC = () => {
                                         </span>
                                     ))}
                                 </div>
-
-                                {/* Link */}
-                                <a
-                                    href="#"
-                                    className={`inline-flex items-center gap-2 ${offering.iconColor} font-semibold text-sm group-hover:gap-3 transition-all duration-300`}
-                                >
-                                    Detaylı Bilgi <ArrowRight size={16} />
-                                </a>
                             </div>
                         );
                     })}

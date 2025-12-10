@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, TouchEvent } from 'react';
 import { Button } from './Button';
-import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, BookOpen, Users, Laptop, Sparkles, Rocket, Star } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, CheckCircle, Sparkles, Rocket } from 'lucide-react';
 import { useSiteContent } from '../context/SiteContentContext';
 
 const slides = [
@@ -184,7 +184,7 @@ export const Hero: React.FC = () => {
           {/* Content */}
           <div className="relative z-10 h-full flex items-center">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-              <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Text Content */}
                 <div className={`transform transition-all duration-700 delay-200 ${index === currentSlide ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
                   {/* Fun Badge */}
@@ -246,58 +246,21 @@ export const Hero: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Fun Illustration Side - Only on lg+ */}
+                {/* Hero Image - Right Side (lg+) */}
                 <div className={`hidden lg:block transform transition-all duration-700 delay-400 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
                   <div className="relative">
-                    {/* Main Card */}
-                    <div className="bg-white/15 backdrop-blur-md rounded-3xl p-6 xl:p-8 border border-white/20">
-                      <div className="text-center mb-4 xl:mb-6">
-                        <div className="text-6xl xl:text-8xl mb-4 animate-bounce-slow">{slide.emoji}</div>
-                        <div className="flex justify-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-5 h-5 xl:w-6 xl:h-6 text-yellow-400 fill-yellow-400" />
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="grid gap-3 xl:gap-4">
-                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
-                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <BookOpen className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
-                          </div>
-                          <div>
-                            <div className="text-white font-bold text-sm xl:text-base">Akıllı Öğrenme</div>
-                            <div className="text-white/70 text-xs xl:text-sm">7 Farklı Modül</div>
-                          </div>
-                        </div>
-                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
-                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <Users className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
-                          </div>
-                          <div>
-                            <div className="text-white font-bold text-sm xl:text-base">8500+ Öğrenci</div>
-                            <div className="text-white/70 text-xs xl:text-sm">Mutlu aile</div>
-                          </div>
-                        </div>
-                        <div className="bg-white/20 rounded-xl p-3 xl:p-4 flex items-center gap-3 xl:gap-4">
-                          <div className="w-10 h-10 xl:w-12 xl:h-12 rounded-xl bg-white/30 flex items-center justify-center">
-                            <Laptop className="w-5 h-5 xl:w-6 xl:h-6 text-white" />
-                          </div>
-                          <div>
-                            <div className="text-white font-bold text-sm xl:text-base">7/24 Erişim</div>
-                            <div className="text-white/70 text-xs xl:text-sm">Her yerden öğren</div>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
+                      <img
+                        src={slide.bgImage}
+                        alt={slide.title}
+                        className="w-full h-[400px] xl:h-[500px] object-cover"
+                      />
+                      {/* Overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl"></div>
                     </div>
-
-                    {/* Floating Mini Cards */}
-                    <div className="absolute -top-4 -right-4 bg-yellow-400 text-yellow-900 px-3 xl:px-4 py-1.5 xl:py-2 rounded-xl font-bold text-xs xl:text-sm animate-wiggle shadow-lg">
-                      🎉 %100 MEB Uyumlu
-                    </div>
-                    <div className="absolute -bottom-4 -left-4 bg-emerald-400 text-emerald-900 px-3 xl:px-4 py-1.5 xl:py-2 rounded-xl font-bold text-xs xl:text-sm animate-bounce-slow shadow-lg">
-                      🏆 15+ Yıl Deneyim
-                    </div>
+                    {/* Decorative elements */}
+                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400/30 rounded-full blur-xl"></div>
+                    <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-blue-400/30 rounded-full blur-xl"></div>
                   </div>
                 </div>
               </div>

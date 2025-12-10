@@ -120,7 +120,7 @@ export const Hero: React.FC = () => {
 
   return (
     <section
-      className="relative min-h-[90vh] sm:min-h-[650px] md:min-h-[850px] overflow-hidden pt-20 sm:pt-28 md:pt-32"
+      className="relative min-h-[100vh] sm:min-h-[650px] md:min-h-[850px] overflow-hidden pt-[15rem] sm:pt-28 md:pt-32"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
 
           {/* Content */}
           <div className="relative z-10 h-full flex items-center">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:pt-32 sm:pb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[10rem] pb-6 sm:pt-32 sm:pb-12">
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Text Content */}
                 <div className={`transform transition-all duration-700 delay-200 ${index === currentSlide ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
@@ -225,10 +225,23 @@ export const Hero: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Hero Image - Right Side (lg+) */}
-                <div className={`hidden lg:block transform transition-all duration-700 delay-400 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
+                {/* Hero Image - Right Side (tüm ekranlarda görünür) */}
+                <div className={`order-first lg:order-last transform transition-all duration-700 delay-400 ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
                   <div className="relative">
-                    <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
+                    {/* Mobil görünüm */}
+                    <div className="lg:hidden mt-4">
+                      <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-white/20">
+                        <img
+                          src={slide.bgImage}
+                          alt={slide.title}
+                          className="w-full h-[200px] sm:h-[280px] object-cover"
+                        />
+                        {/* Overlay gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl"></div>
+                      </div>
+                    </div>
+                    {/* Desktop görünüm */}
+                    <div className="hidden lg:block rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
                       <img
                         src={slide.bgImage}
                         alt={slide.title}
@@ -237,9 +250,9 @@ export const Hero: React.FC = () => {
                       {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-3xl"></div>
                     </div>
-                    {/* Decorative elements */}
-                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400/30 rounded-full blur-xl"></div>
-                    <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-blue-400/30 rounded-full blur-xl"></div>
+                    {/* Decorative elements - sadece lg ve üstü */}
+                    <div className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400/30 rounded-full blur-xl hidden lg:block"></div>
+                    <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-blue-400/30 rounded-full blur-xl hidden lg:block"></div>
                   </div>
                 </div>
               </div>
@@ -264,14 +277,6 @@ export const Hero: React.FC = () => {
         <ChevronRight size={24} />
       </button>
 
-      {/* Swipe hint - Sadece mobilde ilk görünümde */}
-      <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-20 sm:hidden">
-        <div className="flex items-center gap-2 text-white/60 text-xs animate-pulse">
-          <span>←</span>
-          <span>Kaydır</span>
-          <span>→</span>
-        </div>
-      </div>
 
       {/* Dots */}
       <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
@@ -284,24 +289,6 @@ export const Hero: React.FC = () => {
             aria-label={`Slide ${index + 1}`}
           />
         ))}
-      </div>
-
-      {/* Mobile Quick Stats */}
-      <div className="absolute bottom-16 left-0 right-0 z-20 px-4 sm:hidden">
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-3 flex justify-around text-center">
-          <div>
-            <div className="text-white font-bold text-lg">7</div>
-            <div className="text-white/70 text-xs">Modül</div>
-          </div>
-          <div className="border-l border-white/20 pl-4">
-            <div className="text-white font-bold text-lg">8500+</div>
-            <div className="text-white/70 text-xs">Öğrenci</div>
-          </div>
-          <div className="border-l border-white/20 pl-4">
-            <div className="text-white font-bold text-lg">7/24</div>
-            <div className="text-white/70 text-xs">Erişim</div>
-          </div>
-        </div>
       </div>
     </section>
   );

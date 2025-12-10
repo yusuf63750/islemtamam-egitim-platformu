@@ -54,9 +54,6 @@ const slides = [
   },
 ];
 
-// Fun floating emojis
-const floatingEmojis = ['📚', '✏️', '🎯', '💡', '🏆', '📝', '🎨', '🔬'];
-
 export const Hero: React.FC = () => {
   const { content } = useSiteContent();
   const hero = content.hero;
@@ -128,24 +125,6 @@ export const Hero: React.FC = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Floating Fun Emojis - Mobilde gizle */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-20 hidden sm:block">
-        {floatingEmojis.map((emoji, i) => (
-          <div
-            key={i}
-            className="absolute text-3xl sm:text-4xl md:text-5xl opacity-15 sm:opacity-20 animate-float"
-            style={{
-              left: `${10 + (i * 12)}%`,
-              top: `${15 + (i % 3) * 25}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${4 + (i % 3)}s`,
-            }}
-          >
-            {emoji}
-          </div>
-        ))}
-      </div>
-
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
